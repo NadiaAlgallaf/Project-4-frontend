@@ -1,43 +1,41 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { signUp } from "../services/authService";
-import { useTranslation } from "react-i18next";
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import { signUp } from '../../services/authService.js'
+import { useTranslation } from 'react-i18next'
 
 function Signup() {
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const navigate = useNavigate()
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    passwordConf: "",
-  });
-  const [ submitting, setSubmitting ] = useState(false)
+    username: '',
+    password: '',
+    passwordConf: ''
+  })
+  const [submitting, setSubmitting] = useState(false)
 
-  const { username, password, passwordConf } = formData;
-  const { t } = useTranslation();
+  const { username, password, passwordConf } = formData
+  const { t } = useTranslation()
 
-  function handleChange(event){
-    setError("");
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-
+  function handleChange(event) {
+    setError('')
+    setFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
-
-  async function handleSubmit(event){
-    event.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault()
     try {
       setSubmitting(true)
-      await signUp(formData);
+      await signUp(formData)
       navigate('/sign-in')
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.response.data.message)
       setSubmitting(false)
     }
   }
 
-  function isFormInvalid(){
-    return !(username && password && password === passwordConf);
-  };
+  function isFormInvalid() {
+    return !(username && password && password === passwordConf)
+  }
 
   return (
     <main>
@@ -78,11 +76,15 @@ function Signup() {
           />
         </div>
         <div>
-          <button disabled={isFormInvalid() || submitting}>{submitting ? t('auth.signUp.submitting') : t('auth.signUp.submit')}</button>
-          <button onClick={() => navigate("/")}>{t('auth.signUp.cancel')}</button>
+          <button disabled={isFormInvalid() || submitting}>
+            {submitting ? t('auth.signUp.submitting') : t('auth.signUp.submit')}
+          </button>
+          <button onClick={() => navigate('/')}>
+            {t('auth.signUp.cancel')}
+          </button>
         </div>
       </form>
     </main>
-  );
+  )
 }
-export default Signup;
+export default Signup
