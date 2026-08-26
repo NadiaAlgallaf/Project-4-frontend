@@ -1,39 +1,39 @@
 // src/components/SignInForm/SignInForm.jsx
 
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router";
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router'
 
-import { signIn } from "../services/authService";
-import { useAuth } from "../context/AuthContext";
-import { useTranslation } from "react-i18next";
+import { signIn } from '../../services/authService.js'
+import { useAuth } from '../../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 const SignInForm = ({}) => {
-  const { setUser } = useAuth();
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const { setUser } = useAuth()
+  const navigate = useNavigate()
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const { t } = useTranslation();
+    username: '',
+    password: ''
+  })
+  const { t } = useTranslation()
 
   function handleChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    setFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
   }
   async function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      const signedInUser = await signIn(formData);
+      const signedInUser = await signIn(formData)
 
-      setUser(signedInUser);
-      navigate("/dashboard");
+      setUser(signedInUser)
+      navigate('/dashboard')
     } catch (err) {
-      console.log(`Error: ${err}`);
-      setError(err?.response?.data?.message);
+      console.log(`Error: ${err}`)
+      setError(err?.response?.data?.message)
     }
   }
 
@@ -68,11 +68,13 @@ const SignInForm = ({}) => {
         </div>
         <div>
           <button>{t('auth.signIn.submit')}</button>
-          <button onClick={() => navigate("/")}>{t('auth.signIn.cancel')}</button>
+          <button onClick={() => navigate('/')}>
+            {t('auth.signIn.cancel')}
+          </button>
         </div>
       </form>
     </main>
-  );
-};
+  )
+}
 
-export default SignInForm;
+export default SignInForm

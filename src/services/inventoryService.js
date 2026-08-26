@@ -1,0 +1,21 @@
+import api from './api'
+
+async function getMyInventory() {
+  const response = await api.get('/inventory/my-inventory')
+  return response.data
+}
+
+async function addMedicine(medicine) {
+  const response = await api.post('/inventory', {
+    medicine
+  })
+
+  return response.data
+}
+
+async function deleteMedicine(id) {
+  const response = await api.delete(`/inventory/${id}`)
+  return response.data
+}
+
+export { getMyInventory, addMedicine, deleteMedicine }
