@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 
 import ManageInventory from './pages/PharmacyPortal/ManageInventory'
+import PharmacyReservations from './pages/PharmacyPortal/PharmacyReservations'
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           }
         />
         <Route path="/pharmacy/inventory" element={<ManageInventory />} />
+        <Route
+          path="/pharmacy/reservations"
+          element={<PharmacyReservations />}
+        />
       </Routes>
     </div>
   )
