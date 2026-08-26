@@ -12,6 +12,8 @@ import { useAuth } from './context/AuthContext'
 
 import ManageInventory from './pages/PharmacyPortal/ManageInventory'
 import PharmacyReservations from './pages/PharmacyPortal/PharmacyReservations'
+import MyReservations from './pages/Reservations/MyReservations'
+import ReservationDetails from './pages/Reservations/ReservationDetails'
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           path="/pharmacy/reservations"
           element={<PharmacyReservations />}
         />
+        <Route path="/my-reservations" element={<MyReservations />} />
+        <Route path="/reservations/:id" element={<ReservationDetails />} />
       </Routes>
     </div>
   )
