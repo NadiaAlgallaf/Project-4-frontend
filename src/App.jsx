@@ -17,6 +17,8 @@ import ReservationDetails from './pages/Reservations/ReservationDetails'
 
 import Medicines from './pages/Medicines/Medicines'
 import MedicineDetails from './pages/Medicines/MedicineDetails'
+import Pharmacies from './pages/Pharmacies/Pharmacies'
+import PharmacyDetails from './pages/Pharmacies/PharmacyDetails'
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         />
         <Route path="/medicines" element={<Medicines />} />
         <Route path="/medicines/:id" element={<MedicineDetails />} />
+        <Route path="/pharmacies" element={<Pharmacies />} />
+        <Route path="/pharmacies/:id" element={<PharmacyDetails />} />
         <Route path="/pharmacy/inventory" element={<ManageInventory />} />
         <Route
           path="/pharmacy/reservations"
