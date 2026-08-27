@@ -16,6 +16,7 @@ import MyReservations from './pages/Reservations/MyReservations'
 import ReservationDetails from './pages/Reservations/ReservationDetails'
 
 import Medicines from './pages/Medicines/Medicines'
+import MedicineDetails from './pages/Medicines/MedicineDetails'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           }
         />
         <Route path="/medicines" element={<Medicines />} />
+        <Route path="/medicines/:id" element={<MedicineDetails />} />
         <Route path="/pharmacy/inventory" element={<ManageInventory />} />
         <Route
           path="/pharmacy/reservations"
