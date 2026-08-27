@@ -15,6 +15,9 @@ import PharmacyReservations from './pages/PharmacyPortal/PharmacyReservations'
 import MyReservations from './pages/Reservations/MyReservations'
 import ReservationDetails from './pages/Reservations/ReservationDetails'
 
+import Medicines from './pages/Medicines/Medicines'
+import MedicineDetails from './pages/Medicines/MedicineDetails'
+
 function App() {
   return (
     <div>
@@ -31,6 +34,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/medicines" element={<Medicines />} />
+        <Route path="/medicines/:id" element={<MedicineDetails />} />
         <Route path="/pharmacy/inventory" element={<ManageInventory />} />
         <Route
           path="/pharmacy/reservations"
