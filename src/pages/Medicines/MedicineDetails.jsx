@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { getMedicineById } from '../../services/medicineService'
 import { getMedicineAvailability } from '../../services/inventoryService'
+import { createReservation } from '../../services/reservationService'
 
 function MedicineDetails() {
   const { id } = useParams()
@@ -10,6 +11,7 @@ function MedicineDetails() {
   const [availability, setAvailability] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   async function loadMedicineDetails() {
     try {
@@ -26,6 +28,25 @@ function MedicineDetails() {
     }
   }
 
+  async function handleReserve(pharmacyId) {
+    try {
+      setError('')
+      setSuccess('')
+
+      await createReservation({
+        pharmacy: pharmacyId,
+        medicine: medicine._id,
+        quantity: 1
+      })
+
+      setSuccess('Reservation created successfully.')
+    } catch (error) {
+      console.log(error)
+
+      setError(error?.response?.data?.message || 'Could not create reservation')
+    }
+  }
+
   useEffect(() => {
     loadMedicineDetails()
   }, [id])
@@ -34,7 +55,7 @@ function MedicineDetails() {
     return <p>Loading...</p>
   }
 
-  if (error) {
+  if (error && !medicine) {
     return <p>{error}</p>
   }
 
@@ -54,6 +75,9 @@ function MedicineDetails() {
           : 'No Prescription Required'}
       </p>
 
+      {error && <p>{error}</p>}
+      {success && <p>{success}</p>}
+
       <h2>Available Pharmacies</h2>
 
       {availability.length === 0 ? (
@@ -68,6 +92,10 @@ function MedicineDetails() {
             <p>Phone: {item.pharmacy.phone}</p>
 
             <p>Stock: {item.stock}</p>
+
+            <button onClick={() => handleReserve(item.pharmacy._id)}>
+              Reserve
+            </button>
 
             <hr />
           </div>
