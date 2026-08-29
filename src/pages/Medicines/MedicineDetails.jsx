@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import { useAuth } from '../../context/AuthContext'
 import { getMedicineById } from '../../services/medicineService'
 import { getMedicineAvailability } from '../../services/inventoryService'
 import { createReservation } from '../../services/reservationService'
 
 function MedicineDetails() {
   const { id } = useParams()
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   const [medicine, setMedicine] = useState(null)
   const [availability, setAvailability] = useState([])
@@ -94,20 +97,28 @@ function MedicineDetails() {
 
             <p>Stock: {item.stock}</p>
 
-            <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
+            {user?.role === 'User' ? (
+              <>
+                <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
 
-            <input
-              type="number"
-              id={`quantity-${item._id}`}
-              min="1"
-              max={item.stock}
-              value={quantity}
-              onChange={(event) => setQuantity(Number(event.target.value))}
-            />
+                <input
+                  type="number"
+                  id={`quantity-${item._id}`}
+                  min="1"
+                  max={item.stock}
+                  value={quantity}
+                  onChange={(event) => setQuantity(Number(event.target.value))}
+                />
 
-            <button onClick={() => handleReserve(item.pharmacy._id)}>
-              Reserve
-            </button>
+                <button onClick={() => handleReserve(item.pharmacy._id)}>
+                  Reserve
+                </button>
+              </>
+            ) : !user ? (
+              <button onClick={() => navigate('/sign-in')}>
+                Sign in to Reserve
+              </button>
+            ) : null}
 
             <hr />
           </div>
