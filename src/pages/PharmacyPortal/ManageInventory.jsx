@@ -4,7 +4,7 @@ import {
   deleteMedicine,
   addMedicine
 } from '../../services/inventoryService'
-import { getAllMedicines } from '../../services/medicineService'
+import { getAllMedicines, createMedicine } from '../../services/medicineService'
 
 function ManageInventory() {
   const [inventory, setInventory] = useState([])
@@ -14,6 +14,17 @@ function ManageInventory() {
   const [search, setSearch] = useState('')
   const [selectedMedicine, setSelectedMedicine] = useState('')
   const [stock, setStock] = useState(1)
+  const [showCreateForm, setShowCreateForm] = useState(false)
+
+  const [newMedicine, setNewMedicine] = useState({
+    name: '',
+    dosage: '',
+    category: '',
+    price: '',
+    requiresPrescription: false
+  })
+
+  const [newMedicineStock, setNewMedicineStock] = useState(1)
 
   async function loadInventory() {
     try {
@@ -62,6 +73,45 @@ function ManageInventory() {
       setError(
         error?.response?.data?.message || 'Could not add medicine to inventory'
       )
+    }
+  }
+
+  async function handleCreateMedicine(event) {
+    event.preventDefault()
+
+    try {
+      setError('')
+
+      if (newMedicineStock < 1) {
+        setError('Stock must be at least 1')
+        return
+      }
+
+      const createdMedicine = await createMedicine({
+        ...newMedicine,
+        price: Number(newMedicine.price)
+      })
+
+      await addMedicine(createdMedicine._id, newMedicineStock)
+
+      setNewMedicine({
+        name: '',
+        dosage: '',
+        category: '',
+        price: '',
+        requiresPrescription: false
+      })
+
+      setNewMedicineStock(1)
+      setShowCreateForm(false)
+      setSearch('')
+
+      await loadMedicines()
+      await loadInventory()
+    } catch (error) {
+      console.log(error)
+
+      setError(error?.response?.data?.message || 'Could not create medicine')
     }
   }
 
