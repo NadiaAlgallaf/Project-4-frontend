@@ -12,6 +12,7 @@ function MedicineDetails() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [quantity, setQuantity] = useState(1)
 
   async function loadMedicineDetails() {
     try {
@@ -36,7 +37,7 @@ function MedicineDetails() {
       await createReservation({
         pharmacy: pharmacyId,
         medicine: medicine._id,
-        quantity: 1
+        quantity: quantity
       })
 
       setSuccess('Reservation created successfully.')
@@ -92,6 +93,17 @@ function MedicineDetails() {
             <p>Phone: {item.pharmacy.phone}</p>
 
             <p>Stock: {item.stock}</p>
+
+            <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
+
+            <input
+              type="number"
+              id={`quantity-${item._id}`}
+              min="1"
+              max={item.stock}
+              value={quantity}
+              onChange={(event) => setQuantity(Number(event.target.value))}
+            />
 
             <button onClick={() => handleReserve(item.pharmacy._id)}>
               Reserve
