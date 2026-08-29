@@ -5,7 +5,7 @@ async function getMyInventory() {
   return response.data
 }
 
-async function addMedicine(medicine) {
+async function addMedicine(medicine, stock) {
   const response = await api.post('/inventory', {
     medicine,
     stock

@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { getMyInventory, deleteMedicine } from '../../services/inventoryService'
+import {
+  getMyInventory,
+  deleteMedicine,
+  addMedicine
+} from '../../services/inventoryService'
 import { getAllMedicines } from '../../services/medicineService'
 
 function ManageInventory() {
@@ -28,6 +32,36 @@ function ManageInventory() {
     } catch (error) {
       console.log(error)
       setError('Could not load medicines')
+    }
+  }
+
+  async function handleAddMedicine() {
+    try {
+      setError('')
+
+      if (!selectedMedicine) {
+        setError('Please select a medicine')
+        return
+      }
+
+      if (stock < 1) {
+        setError('Stock must be at least 1')
+        return
+      }
+
+      await addMedicine(selectedMedicine, stock)
+
+      setSelectedMedicine('')
+      setSearch('')
+      setStock(1)
+
+      loadInventory()
+    } catch (error) {
+      console.log(error)
+
+      setError(
+        error?.response?.data?.message || 'Could not add medicine to inventory'
+      )
     }
   }
 
@@ -93,8 +127,25 @@ function ManageInventory() {
         </div>
       )}
 
+      {selectedMedicine && (
+        <div>
+          <label htmlFor="stock">Stock:</label>
+
+          <input
+            type="number"
+            id="stock"
+            min="1"
+            value={stock}
+            onChange={(event) => setStock(Number(event.target.value))}
+          />
+
+          <button onClick={handleAddMedicine}>Add to Inventory</button>
+        </div>
+      )}
+
       {error && <p>{error}</p>}
 
+      <h2>My Inventory</h2>
       {inventory.length === 0 ? (
         <p>No medicines in your inventory.</p>
       ) : (
@@ -105,6 +156,7 @@ function ManageInventory() {
             <p>Dosage: {item.medicine.dosage}</p>
             <p>Category: {item.medicine.category}</p>
             <p>Price: {item.medicine.price} BD</p>
+            <p>Stock: {item.stock}</p>
 
             <p>
               {item.medicine.requiresPrescription
