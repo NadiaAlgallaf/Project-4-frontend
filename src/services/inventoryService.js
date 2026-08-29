@@ -7,7 +7,8 @@ async function getMyInventory() {
 
 async function addMedicine(medicine) {
   const response = await api.post('/inventory', {
-    medicine
+    medicine,
+    stock
   })
 
   return response.data
