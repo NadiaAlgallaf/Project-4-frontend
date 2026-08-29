@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getMyInventory, deleteMedicine } from '../../services/inventoryService'
+import { getAllMedicines } from '../../services/medicineService'
 
 function ManageInventory() {
   const [inventory, setInventory] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [medicines, setMedicines] = useState([])
 
   async function loadInventory() {
     try {
@@ -13,8 +15,16 @@ function ManageInventory() {
     } catch (error) {
       console.log(error)
       setError('Could not load inventory')
-    } finally {
-      setLoading(false)
+    }
+  }
+
+  async function loadMedicines() {
+    try {
+      const data = await getAllMedicines()
+      setMedicines(data)
+    } catch (error) {
+      console.log(error)
+      setError('Could not load medicines')
     }
   }
 
@@ -29,7 +39,13 @@ function ManageInventory() {
   }
 
   useEffect(() => {
-    loadInventory()
+    async function loadPage() {
+      await loadInventory()
+      await loadMedicines()
+      setLoading(false)
+    }
+
+    loadPage()
   }, [])
 
   if (loading) {
