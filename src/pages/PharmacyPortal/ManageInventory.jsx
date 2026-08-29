@@ -193,6 +193,126 @@ function ManageInventory() {
         </div>
       )}
 
+      <div>
+        <p>Can't find the medicine?</p>
+
+        <button
+          type="button"
+          onClick={() => setShowCreateForm(!showCreateForm)}
+        >
+          {showCreateForm ? 'Cancel' : 'Create New Medicine'}
+        </button>
+      </div>
+
+      {showCreateForm && (
+        <form onSubmit={handleCreateMedicine}>
+          <h3>Create New Medicine</h3>
+
+          <div>
+            <label htmlFor="medicineName">Medicine Name:</label>
+
+            <input
+              type="text"
+              id="medicineName"
+              value={newMedicine.name}
+              onChange={(event) =>
+                setNewMedicine({
+                  ...newMedicine,
+                  name: event.target.value
+                })
+              }
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="dosage">Dosage:</label>
+
+            <input
+              type="text"
+              id="dosage"
+              value={newMedicine.dosage}
+              onChange={(event) =>
+                setNewMedicine({
+                  ...newMedicine,
+                  dosage: event.target.value
+                })
+              }
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="category">Category:</label>
+
+            <input
+              type="text"
+              id="category"
+              value={newMedicine.category}
+              onChange={(event) =>
+                setNewMedicine({
+                  ...newMedicine,
+                  category: event.target.value
+                })
+              }
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="price">Price:</label>
+
+            <input
+              type="number"
+              id="price"
+              min="0"
+              step="0.001"
+              value={newMedicine.price}
+              onChange={(event) =>
+                setNewMedicine({
+                  ...newMedicine,
+                  price: event.target.value
+                })
+              }
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="requiresPrescription">Requires Prescription:</label>
+
+            <input
+              type="checkbox"
+              id="requiresPrescription"
+              checked={newMedicine.requiresPrescription}
+              onChange={(event) =>
+                setNewMedicine({
+                  ...newMedicine,
+                  requiresPrescription: event.target.checked
+                })
+              }
+            />
+          </div>
+
+          <div>
+            <label htmlFor="newMedicineStock">Stock:</label>
+
+            <input
+              type="number"
+              id="newMedicineStock"
+              min="1"
+              value={newMedicineStock}
+              onChange={(event) =>
+                setNewMedicineStock(Number(event.target.value))
+              }
+              required
+            />
+          </div>
+
+          <button type="submit">Create and Add to Inventory</button>
+        </form>
+      )}
+
       {error && <p>{error}</p>}
 
       <h2>My Inventory</h2>
@@ -215,6 +335,7 @@ function ManageInventory() {
             </p>
 
             <button onClick={() => handleDelete(item._id)}>Remove</button>
+            <hr />
           </div>
         ))
       )}
