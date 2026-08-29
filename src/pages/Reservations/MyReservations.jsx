@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getMyReservations } from '../../services/reservationService'
+import { Link } from 'react-router'
 
 function MyReservations() {
   const [reservations, setReservations] = useState([])
@@ -45,7 +46,7 @@ function MyReservations() {
 
             <p>Status: {reservation.status}</p>
 
-            <a href={`/reservations/${reservation._id}`}>View Details</a>
+            <Link to={`/reservations/${reservation._id}`}>View Details</Link>
 
             <hr />
           </div>
