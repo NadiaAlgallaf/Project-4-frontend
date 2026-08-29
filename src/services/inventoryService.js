@@ -13,9 +13,15 @@ async function addMedicine(medicine) {
   return response.data
 }
 
+async function getMedicineAvailability(medicineId) {
+  const response = await api.get(`/inventory/medicine/${medicineId}`)
+
+  return response.data
+}
+
 async function deleteMedicine(id) {
   const response = await api.delete(`/inventory/${id}`)
   return response.data
 }
 
-export { getMyInventory, addMedicine, deleteMedicine }
+export { getMyInventory, addMedicine, getMedicineAvailability, deleteMedicine }
