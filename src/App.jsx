@@ -19,6 +19,7 @@ import Medicines from './pages/Medicines/Medicines'
 import MedicineDetails from './pages/Medicines/MedicineDetails'
 import Pharmacies from './pages/Pharmacies/Pharmacies'
 import PharmacyDetails from './pages/Pharmacies/PharmacyDetails'
+import PharmacyDashboard from './pages/PharmacyPortal/PharmacyDashboard'
 
 function App() {
   return (
@@ -40,11 +41,13 @@ function App() {
         <Route path="/medicines/:id" element={<MedicineDetails />} />
         <Route path="/pharmacies" element={<Pharmacies />} />
         <Route path="/pharmacies/:id" element={<PharmacyDetails />} />
+        <Route path="/pharmacy/dashboard" element={<PharmacyDashboard />} />
         <Route path="/pharmacy/inventory" element={<ManageInventory />} />
         <Route
           path="/pharmacy/reservations"
           element={<PharmacyReservations />}
         />
+
         <Route path="/my-reservations" element={<MyReservations />} />
         <Route path="/reservations/:id" element={<ReservationDetails />} />
       </Routes>
