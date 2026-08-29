@@ -1,49 +1,62 @@
 // src/components/SignInForm/SignInForm.jsx
 
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
-
 import { signIn } from '../../services/authService.js'
 import { useAuth } from '../../context/AuthContext'
 import { useTranslation } from 'react-i18next'
 
-const SignInForm = ({}) => {
+const SignInForm = () => {
   const { setUser } = useAuth()
   const navigate = useNavigate()
+  const { t } = useTranslation()
+
   const [error, setError] = useState('')
+
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   })
-  const { t } = useTranslation()
 
   function handleChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value })
+    setError('')
+
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    })
   }
 
   async function handleSubmit(event) {
     event.preventDefault()
-  }
-  async function handleSubmit(event) {
-    event.preventDefault()
+
     try {
       const signedInUser = await signIn(formData)
 
       setUser(signedInUser)
-      navigate('/dashboard')
+
+      if (signedInUser.role === 'Pharmacy') {
+        navigate('/pharmacy/dashboard')
+      } else {
+        navigate('/')
+      }
     } catch (err) {
-      console.log(`Error: ${err}`)
-      setError(err?.response?.data?.message)
+      console.log(err)
+
+      setError(err?.response?.data?.message || 'Could not sign in')
     }
   }
 
   return (
     <main>
       <h1>{t('auth.signIn.title')}</h1>
-      <p className="error">{error}</p>
+
+      {error && <p className="error">{error}</p>}
+
       <form autoComplete="off" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">{t('auth.signIn.username')}:</label>
+          <label htmlFor="username">{t('auth.signIn.username')}:</label>
+
           <input
             type="text"
             autoComplete="off"
@@ -54,8 +67,10 @@ const SignInForm = ({}) => {
             required
           />
         </div>
+
         <div>
           <label htmlFor="password">{t('auth.signIn.password')}:</label>
+
           <input
             type="password"
             autoComplete="off"
@@ -66,9 +81,11 @@ const SignInForm = ({}) => {
             required
           />
         </div>
+
         <div>
-          <button>{t('auth.signIn.submit')}</button>
-          <button onClick={() => navigate('/')}>
+          <button type="submit">{t('auth.signIn.submit')}</button>
+
+          <button type="button" onClick={() => navigate('/')}>
             {t('auth.signIn.cancel')}
           </button>
         </div>
