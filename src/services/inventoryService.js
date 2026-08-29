@@ -5,10 +5,17 @@ async function getMyInventory() {
   return response.data
 }
 
-async function addMedicine(medicine) {
+async function addMedicine(medicine, stock) {
   const response = await api.post('/inventory', {
-    medicine
+    medicine,
+    stock
   })
+
+  return response.data
+}
+
+async function getMedicineAvailability(medicineId) {
+  const response = await api.get(`/inventory/medicine/${medicineId}`)
 
   return response.data
 }
@@ -18,4 +25,4 @@ async function deleteMedicine(id) {
   return response.data
 }
 
-export { getMyInventory, addMedicine, deleteMedicine }
+export { getMyInventory, addMedicine, getMedicineAvailability, deleteMedicine }

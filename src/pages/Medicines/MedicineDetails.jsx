@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import { useAuth } from '../../context/AuthContext'
 import { getMedicineById } from '../../services/medicineService'
+import { getMedicineAvailability } from '../../services/inventoryService'
+import { createReservation } from '../../services/reservationService'
 
 function MedicineDetails() {
   const { id } = useParams()
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   const [medicine, setMedicine] = useState(null)
+  const [availability, setAvailability] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [quantity, setQuantity] = useState(1)
 
-  async function loadMedicine() {
+  async function loadMedicineDetails() {
     try {
-      const data = await getMedicineById(id)
-      setMedicine(data)
+      const medicineData = await getMedicineById(id)
+      const availabilityData = await getMedicineAvailability(id)
+
+      setMedicine(medicineData)
+      setAvailability(availabilityData)
     } catch (error) {
       console.log(error)
       setError('Could not load medicine')
@@ -21,15 +32,34 @@ function MedicineDetails() {
     }
   }
 
+  async function handleReserve(pharmacyId) {
+    try {
+      setError('')
+      setSuccess('')
+
+      await createReservation({
+        pharmacy: pharmacyId,
+        medicine: medicine._id,
+        quantity: quantity
+      })
+
+      setSuccess('Reservation created successfully.')
+    } catch (error) {
+      console.log(error)
+
+      setError(error?.response?.data?.message || 'Could not create reservation')
+    }
+  }
+
   useEffect(() => {
-    loadMedicine()
+    loadMedicineDetails()
   }, [id])
 
   if (loading) {
     return <p>Loading...</p>
   }
 
-  if (error) {
+  if (error && !medicine) {
     return <p>{error}</p>
   }
 
@@ -48,6 +78,52 @@ function MedicineDetails() {
           ? 'Prescription Required'
           : 'No Prescription Required'}
       </p>
+
+      {error && <p>{error}</p>}
+      {success && <p>{success}</p>}
+
+      <h2>Available Pharmacies</h2>
+
+      {availability.length === 0 ? (
+        <p>This medicine is currently unavailable.</p>
+      ) : (
+        availability.map((item) => (
+          <div key={item._id}>
+            <h3>{item.pharmacy.name}</h3>
+
+            <p>Location: {item.pharmacy.location}</p>
+
+            <p>Phone: {item.pharmacy.phone}</p>
+
+            <p>Stock: {item.stock}</p>
+
+            {user?.role === 'User' ? (
+              <>
+                <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
+
+                <input
+                  type="number"
+                  id={`quantity-${item._id}`}
+                  min="1"
+                  max={item.stock}
+                  value={quantity}
+                  onChange={(event) => setQuantity(Number(event.target.value))}
+                />
+
+                <button onClick={() => handleReserve(item.pharmacy._id)}>
+                  Reserve
+                </button>
+              </>
+            ) : !user ? (
+              <button onClick={() => navigate('/sign-in')}>
+                Sign in to Reserve
+              </button>
+            ) : null}
+
+            <hr />
+          </div>
+        ))
+      )}
     </main>
   )
 }

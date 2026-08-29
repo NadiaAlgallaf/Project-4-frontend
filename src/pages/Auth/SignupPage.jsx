@@ -17,11 +17,24 @@ function Signup() {
     email: '',
     password: '',
     passwordConf: '',
-    role: ''
+    role: '',
+    pharmacyName: '',
+    location: '',
+    phone: ''
   })
 
-  const { username, firstName, lastName, email, password, passwordConf, role } =
-    formData
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    password,
+    passwordConf,
+    role,
+    pharmacyName,
+    location,
+    phone
+  } = formData
 
   function handleChange(event) {
     setError('')
@@ -49,16 +62,26 @@ function Signup() {
   }
 
   function isFormInvalid() {
-    return !(
-      username &&
-      firstName &&
-      lastName &&
-      email &&
-      password &&
-      passwordConf &&
-      role &&
-      password === passwordConf
-    )
+    if (
+      !username ||
+      !email ||
+      !password ||
+      !passwordConf ||
+      !role ||
+      password !== passwordConf
+    ) {
+      return true
+    }
+
+    if (role === 'User') {
+      return !firstName || !lastName
+    }
+
+    if (role === 'Pharmacy') {
+      return !pharmacyName || !location || !phone
+    }
+
+    return true
   }
 
   return (
@@ -68,6 +91,22 @@ function Signup() {
       {error && <p className="error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="role">Account Type:</label>
+
+          <select
+            id="role"
+            name="role"
+            value={role}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select account type</option>
+            <option value="User">User</option>
+            <option value="Pharmacy">Pharmacy</option>
+          </select>
+        </div>
+
         <div>
           <label htmlFor="username">{t('auth.signUp.username')}:</label>
 
@@ -81,31 +120,35 @@ function Signup() {
           />
         </div>
 
-        <div>
-          <label htmlFor="firstName">First Name:</label>
+        {role === 'User' && (
+          <>
+            <div>
+              <label htmlFor="firstName">First Name:</label>
 
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
+            <div>
+              <label htmlFor="lastName">Last Name:</label>
 
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </>
+        )}
 
         <div>
           <label htmlFor="email">Email:</label>
@@ -146,21 +189,48 @@ function Signup() {
           />
         </div>
 
-        <div>
-          <label htmlFor="role">Account Type:</label>
+        {role === 'Pharmacy' && (
+          <>
+            <div>
+              <label htmlFor="pharmacyName">Pharmacy Name:</label>
 
-          <select
-            id="role"
-            name="role"
-            value={role}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select account type</option>
-            <option value="User">User</option>
-            <option value="Pharmacy">Pharmacy</option>
-          </select>
-        </div>
+              <input
+                type="text"
+                id="pharmacyName"
+                name="pharmacyName"
+                value={pharmacyName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="location">Location:</label>
+
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={location}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phone">Phone:</label>
+
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </>
+        )}
 
         <div>
           <button type="submit" disabled={isFormInvalid() || submitting}>
