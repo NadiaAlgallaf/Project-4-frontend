@@ -7,6 +7,9 @@ function ManageInventory() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [medicines, setMedicines] = useState([])
+  const [search, setSearch] = useState('')
+  const [selectedMedicine, setSelectedMedicine] = useState('')
+  const [stock, setStock] = useState(1)
 
   async function loadInventory() {
     try {
@@ -52,9 +55,43 @@ function ManageInventory() {
     return <p>Loading...</p>
   }
 
+  const filteredMedicines = medicines.filter((medicine) =>
+    medicine.name.toLowerCase().includes(search.toLowerCase())
+  )
+
   return (
     <main>
       <h1>Manage Inventory</h1>
+
+      <h2>Add Medicine</h2>
+
+      <input
+        type="text"
+        placeholder="Search medicine"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+      />
+
+      {search && (
+        <div>
+          {filteredMedicines.map((medicine) => (
+            <div key={medicine._id}>
+              <p>
+                {medicine.name} - {medicine.dosage}
+              </p>
+
+              <button
+                onClick={() => {
+                  setSelectedMedicine(medicine._id)
+                  setSearch(medicine.name)
+                }}
+              >
+                Select
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       {error && <p>{error}</p>}
 
