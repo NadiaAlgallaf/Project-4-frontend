@@ -24,33 +24,52 @@ function MyReservations() {
   }, [])
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   return (
-    <main>
-      <h1>My Reservations</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">My Reservations</h1>
+        <p className="page-subtitle">
+          View and manage your medicine reservations.
+        </p>
+      </div>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {reservations.length === 0 ? (
-        <p>You have no reservations yet.</p>
+        <p className="page-message">You have no reservations yet.</p>
       ) : (
-        reservations.map((reservation) => (
-          <div key={reservation._id}>
-            <h3>{reservation.medicine.name}</h3>
+        <div className="card-list">
+          {reservations.map((reservation) => (
+            <div className="card" key={reservation._id}>
+              <h3 className="card-title">{reservation.medicine.name}</h3>
 
-            <p>Pharmacy: {reservation.pharmacy.name}</p>
+              <p>
+                <span className="card-label">Pharmacy:</span>{' '}
+                {reservation.pharmacy.name}
+              </p>
 
-            <p>Quantity: {reservation.quantity}</p>
+              <p>
+                <span className="card-label">Quantity:</span>{' '}
+                {reservation.quantity}
+              </p>
 
-            <p>Status: {reservation.status}</p>
+              <p>
+                <span className="card-label">Status:</span>{' '}
+                <span className="badge badge-light">{reservation.status}</span>
+              </p>
 
-            <Link to={`/reservations/${reservation._id}`}>View Details</Link>
-
-            <hr />
-          </div>
-        ))
+              <Link
+                className="btn btn-primary"
+                to={`/reservations/${reservation._id}`}
+              >
+                View Details
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </main>
   )
