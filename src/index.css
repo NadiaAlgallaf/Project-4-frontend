@@ -125,3 +125,113 @@ a {
   background-color: var(--primary-medium);
   color: var(--white);
 }
+
+/* Page Layout */
+
+.page-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.page-header {
+  margin-bottom: 25px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 32px;
+  color: var(--primary-dark);
+}
+
+.page-subtitle {
+  margin-top: 8px;
+  color: var(--text-light);
+}
+
+.page-message {
+  text-align: center;
+  color: var(--text-light);
+  margin-top: 40px;
+}
+
+/* Search */
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 15px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+
+  background-color: var(--white);
+
+  margin-bottom: 30px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-medium);
+}
+
+/* Cards */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  background-color: var(--white);
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  padding: 22px;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 18px;
+
+  color: var(--primary-dark);
+  font-size: 20px;
+}
+
+.card p {
+  margin: 10px 0;
+  color: var(--text-light);
+}
+
+.card-label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Badges */
+
+.badge {
+  display: inline-block;
+
+  padding: 6px 10px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.badge-gold {
+  background-color: var(--gold-light);
+  color: #7a5b00;
+}
+
+.badge-light {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
