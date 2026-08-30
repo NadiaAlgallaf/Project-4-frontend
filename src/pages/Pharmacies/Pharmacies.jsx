@@ -29,37 +29,54 @@ function Pharmacies() {
   )
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   return (
-    <main>
-      <h1>Pharmacies</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">Pharmacies</h1>
+        <p className="page-subtitle">
+          Find pharmacies and check their details.
+        </p>
+      </div>
 
       <input
+        className="search-input"
         type="text"
         placeholder="Search pharmacies"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
       />
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {filteredPharmacies.length === 0 ? (
-        <p>No pharmacies found.</p>
+        <p className="page-message">No pharmacies found.</p>
       ) : (
-        filteredPharmacies.map((pharmacy) => (
-          <div key={pharmacy._id}>
-            <h3>{pharmacy.name}</h3>
+        <div className="card-list">
+          {filteredPharmacies.map((pharmacy) => (
+            <div className="card" key={pharmacy._id}>
+              <h3 className="card-title">{pharmacy.name}</h3>
 
-            <p>Location: {pharmacy.location}</p>
-            <p>Phone: {pharmacy.phone}</p>
+              <p>
+                <span className="card-label">Location:</span>{' '}
+                {pharmacy.location}
+              </p>
 
-            <Link to={`/pharmacies/${pharmacy._id}`}>View Details</Link>
+              <p>
+                <span className="card-label">Phone:</span> {pharmacy.phone}
+              </p>
 
-            <hr />
-          </div>
-        ))
+              <Link
+                className="btn btn-primary"
+                to={`/pharmacies/${pharmacy._id}`}
+              >
+                View Details
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </main>
   )
