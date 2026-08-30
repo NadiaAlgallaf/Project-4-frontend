@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import {
   getMyInventory,
   deleteMedicine,
-  addMedicine
+  addMedicine,
+  updateInventoryStock
 } from '../../services/inventoryService'
 import { getAllMedicines, createMedicine } from '../../services/medicineService'
 
@@ -25,6 +26,7 @@ function ManageInventory() {
   })
 
   const [newMedicineStock, setNewMedicineStock] = useState(1)
+  const [stockUpdates, setStockUpdates] = useState({})
 
   async function loadInventory() {
     try {
@@ -122,6 +124,31 @@ function ManageInventory() {
     } catch (error) {
       console.log(error)
       setError('Could not remove medicine')
+    }
+  }
+
+  async function handleUpdateStock(id) {
+    try {
+      setError('')
+
+      const stock = stockUpdates[id]
+
+      if (stock === undefined || stock === '') {
+        setError('Please enter the new stock.')
+        return
+      }
+
+      await updateInventoryStock(id, Number(stock))
+
+      setStockUpdates({
+        ...stockUpdates,
+        [id]: ''
+      })
+
+      loadInventory()
+    } catch (error) {
+      console.log(error)
+      setError(error.response?.data?.message || 'Could not update stock.')
     }
   }
 
@@ -327,6 +354,23 @@ function ManageInventory() {
             <p>Category: {item.medicine.category}</p>
             <p>Price: {item.medicine.price} BD</p>
             <p>Stock: {item.stock}</p>
+
+            <input
+              type="number"
+              min="0"
+              placeholder="New stock"
+              value={stockUpdates[item._id] || ''}
+              onChange={(e) =>
+                setStockUpdates({
+                  ...stockUpdates,
+                  [item._id]: e.target.value
+                })
+              }
+            />
+
+            <button onClick={() => handleUpdateStock(item._id)}>
+              Update Stock
+            </button>
 
             <p>
               {item.medicine.requiresPrescription
