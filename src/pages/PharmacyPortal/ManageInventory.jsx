@@ -163,7 +163,7 @@ function ManageInventory() {
   }, [])
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   const filteredMedicines = medicines.filter((medicine) =>
@@ -171,218 +171,316 @@ function ManageInventory() {
   )
 
   return (
-    <main>
-      <h1>Manage Inventory</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">Manage Inventory</h1>
 
-      <h2>Add Medicine</h2>
-
-      <input
-        type="text"
-        placeholder="Search medicine"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
-
-      {search && (
-        <div>
-          {filteredMedicines.map((medicine) => (
-            <div key={medicine._id}>
-              <p>
-                {medicine.name} - {medicine.dosage}
-              </p>
-
-              <button
-                onClick={() => {
-                  setSelectedMedicine(medicine._id)
-                  setSearch(medicine.name)
-                }}
-              >
-                Select
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {selectedMedicine && (
-        <div>
-          <label htmlFor="stock">Stock:</label>
-
-          <input
-            type="number"
-            id="stock"
-            min="1"
-            value={stock}
-            onChange={(event) => setStock(Number(event.target.value))}
-          />
-
-          <button onClick={handleAddMedicine}>Add to Inventory</button>
-        </div>
-      )}
-
-      <div>
-        <p>Can't find the medicine?</p>
-
-        <button
-          type="button"
-          onClick={() => setShowCreateForm(!showCreateForm)}
-        >
-          {showCreateForm ? 'Cancel' : 'Create New Medicine'}
-        </button>
+        <p className="page-subtitle">
+          Add medicines and manage your pharmacy stock.
+        </p>
       </div>
 
-      {showCreateForm && (
-        <form onSubmit={handleCreateMedicine}>
-          <h3>Create New Medicine</h3>
+      {error && <p className="error">{error}</p>}
 
-          <div>
-            <label htmlFor="medicineName">Medicine Name:</label>
+      <section className="inventory-section">
+        <div className="section-header">
+          <h2>Add Medicine</h2>
+          <p>Search for an existing medicine and add it to your inventory.</p>
+        </div>
+
+        <div className="form-card inventory-form-card">
+          <div className="form-group">
+            <label htmlFor="medicineSearch">Search Medicine</label>
 
             <input
+              className="form-input"
+              id="medicineSearch"
               type="text"
-              id="medicineName"
-              value={newMedicine.name}
-              onChange={(event) =>
-                setNewMedicine({
-                  ...newMedicine,
-                  name: event.target.value
-                })
-              }
-              required
+              placeholder="Search medicine"
+              value={search}
+              onChange={(event) => {
+                setSearch(event.target.value)
+                setSelectedMedicine('')
+              }}
             />
           </div>
 
-          <div>
-            <label htmlFor="dosage">Dosage:</label>
+          {search && !selectedMedicine && (
+            <div className="search-results">
+              {filteredMedicines.length === 0 ? (
+                <p className="search-empty">No medicines found.</p>
+              ) : (
+                filteredMedicines.map((medicine) => (
+                  <div className="search-result-item" key={medicine._id}>
+                    <div>
+                      <strong>{medicine.name}</strong>
+                      <p>{medicine.dosage}</p>
+                    </div>
 
-            <input
-              type="text"
-              id="dosage"
-              value={newMedicine.dosage}
-              onChange={(event) =>
-                setNewMedicine({
-                  ...newMedicine,
-                  dosage: event.target.value
-                })
-              }
-              required
-            />
-          </div>
+                    <button
+                      className="btn btn-light"
+                      type="button"
+                      onClick={() => {
+                        setSelectedMedicine(medicine._id)
+                        setSearch(medicine.name)
+                      }}
+                    >
+                      Select
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
 
-          <div>
-            <label htmlFor="category">Category:</label>
+          {selectedMedicine && (
+            <div className="selected-medicine-section">
+              <p>
+                Selected medicine: <strong>{search}</strong>
+              </p>
 
-            <input
-              type="text"
-              id="category"
-              value={newMedicine.category}
-              onChange={(event) =>
-                setNewMedicine({
-                  ...newMedicine,
-                  category: event.target.value
-                })
-              }
-              required
-            />
-          </div>
+              <div className="inventory-add-controls">
+                <div className="stock-field">
+                  <label htmlFor="stock">Stock</label>
 
-          <div>
-            <label htmlFor="price">Price:</label>
+                  <input
+                    className="form-input"
+                    type="number"
+                    id="stock"
+                    min="1"
+                    value={stock}
+                    onChange={(event) => setStock(Number(event.target.value))}
+                  />
+                </div>
 
-            <input
-              type="number"
-              id="price"
-              min="0"
-              step="0.001"
-              value={newMedicine.price}
-              onChange={(event) =>
-                setNewMedicine({
-                  ...newMedicine,
-                  price: event.target.value
-                })
-              }
-              required
-            />
-          </div>
+                <button
+                  className="btn btn-primary"
+                  type="button"
+                  onClick={handleAddMedicine}
+                >
+                  Add to Inventory
+                </button>
+              </div>
+            </div>
+          )}
 
-          <div>
-            <label htmlFor="requiresPrescription">Requires Prescription:</label>
+          <div className="inventory-create-toggle">
+            <p>Can't find the medicine?</p>
 
-            <input
-              type="checkbox"
-              id="requiresPrescription"
-              checked={newMedicine.requiresPrescription}
-              onChange={(event) =>
-                setNewMedicine({
-                  ...newMedicine,
-                  requiresPrescription: event.target.checked
-                })
-              }
-            />
-          </div>
-
-          <div>
-            <label htmlFor="newMedicineStock">Stock:</label>
-
-            <input
-              type="number"
-              id="newMedicineStock"
-              min="1"
-              value={newMedicineStock}
-              onChange={(event) =>
-                setNewMedicineStock(Number(event.target.value))
-              }
-              required
-            />
-          </div>
-
-          <button type="submit">Create and Add to Inventory</button>
-        </form>
-      )}
-
-      {error && <p>{error}</p>}
-
-      <h2>My Inventory</h2>
-      {inventory.length === 0 ? (
-        <p>No medicines in your inventory.</p>
-      ) : (
-        inventory.map((item) => (
-          <div key={item._id}>
-            <h3>{item.medicine.name}</h3>
-
-            <p>Dosage: {item.medicine.dosage}</p>
-            <p>Category: {item.medicine.category}</p>
-            <p>Price: {item.medicine.price} BD</p>
-            <p>Stock: {item.stock}</p>
-
-            <input
-              type="number"
-              min="0"
-              placeholder="New stock"
-              value={stockUpdates[item._id] || ''}
-              onChange={(e) =>
-                setStockUpdates({
-                  ...stockUpdates,
-                  [item._id]: e.target.value
-                })
-              }
-            />
-
-            <button onClick={() => handleUpdateStock(item._id)}>
-              Update Stock
+            <button
+              className="btn btn-light"
+              type="button"
+              onClick={() => setShowCreateForm(!showCreateForm)}
+            >
+              {showCreateForm ? 'Cancel' : 'Create New Medicine'}
             </button>
-
-            <p>
-              {item.medicine.requiresPrescription
-                ? 'Prescription Required'
-                : 'No Prescription Required'}
-            </p>
-
-            <button onClick={() => handleDelete(item._id)}>Remove</button>
-            <hr />
           </div>
-        ))
-      )}
+        </div>
+
+        {showCreateForm && (
+          <form
+            className="form-card form inventory-create-form"
+            onSubmit={handleCreateMedicine}
+          >
+            <h3 className="card-title">Create New Medicine</h3>
+
+            <div className="form-group">
+              <label htmlFor="medicineName">Medicine Name</label>
+
+              <input
+                className="form-input"
+                type="text"
+                id="medicineName"
+                value={newMedicine.name}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    name: event.target.value
+                  })
+                }
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="dosage">Dosage</label>
+
+              <input
+                className="form-input"
+                type="text"
+                id="dosage"
+                value={newMedicine.dosage}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    dosage: event.target.value
+                  })
+                }
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="category">Category</label>
+
+              <input
+                className="form-input"
+                type="text"
+                id="category"
+                value={newMedicine.category}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    category: event.target.value
+                  })
+                }
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="price">Price</label>
+
+              <input
+                className="form-input"
+                type="number"
+                id="price"
+                min="0"
+                step="0.001"
+                value={newMedicine.price}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    price: event.target.value
+                  })
+                }
+                required
+              />
+            </div>
+
+            <div className="form-group checkbox-group">
+              <label htmlFor="requiresPrescription">
+                Requires Prescription
+              </label>
+
+              <input
+                type="checkbox"
+                id="requiresPrescription"
+                checked={newMedicine.requiresPrescription}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    requiresPrescription: event.target.checked
+                  })
+                }
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="newMedicineStock">Stock</label>
+
+              <input
+                className="form-input"
+                type="number"
+                id="newMedicineStock"
+                min="1"
+                value={newMedicineStock}
+                onChange={(event) =>
+                  setNewMedicineStock(Number(event.target.value))
+                }
+                required
+              />
+            </div>
+
+            <button className="btn btn-primary" type="submit">
+              Create and Add to Inventory
+            </button>
+          </form>
+        )}
+      </section>
+
+      <section className="inventory-section">
+        <div className="section-header">
+          <h2>My Inventory</h2>
+          <p>View stock levels and update medicines in your pharmacy.</p>
+        </div>
+
+        {inventory.length === 0 ? (
+          <p className="page-message">No medicines in your inventory.</p>
+        ) : (
+          <div className="inventory-table">
+            <div className="inventory-table-header">
+              <span>Medicine</span>
+              <span>Dosage</span>
+              <span>Category</span>
+              <span>Price</span>
+              <span>Stock</span>
+              <span>Prescription</span>
+              <span>Update stock</span>
+            </div>
+
+            {inventory.map((item) => (
+              <div className="inventory-table-row" key={item._id}>
+                <strong>{item.medicine.name}</strong>
+
+                <span>{item.medicine.dosage}</span>
+
+                <span>{item.medicine.category}</span>
+
+                <span>{item.medicine.price} BD</span>
+
+                <span className="inventory-stock">{item.stock}</span>
+
+                <span>
+                  <span
+                    className={
+                      item.medicine.requiresPrescription
+                        ? 'badge badge-gold'
+                        : 'badge badge-light'
+                    }
+                  >
+                    {item.medicine.requiresPrescription
+                      ? 'Required'
+                      : 'Not Required'}
+                  </span>
+                </span>
+
+                <div className="inventory-actions">
+                  <input
+                    className="stock-input"
+                    type="number"
+                    min="0"
+                    placeholder="Stock"
+                    value={stockUpdates[item._id] || ''}
+                    onChange={(event) =>
+                      setStockUpdates({
+                        ...stockUpdates,
+                        [item._id]: event.target.value
+                      })
+                    }
+                  />
+
+                  <button
+                    className="btn btn-light"
+                    type="button"
+                    onClick={() => handleUpdateStock(item._id)}
+                  >
+                    Update
+                  </button>
+
+                  <button
+                    className="btn btn-danger inventory-remove"
+                    type="button"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </main>
   )
 }
