@@ -16,6 +16,7 @@ function MedicineDetails() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [quantity, setQuantity] = useState(1)
+  const [locationFilter, setLocationFilter] = useState('')
 
   async function loadMedicineDetails() {
     try {
@@ -51,13 +52,21 @@ function MedicineDetails() {
     } catch (error) {
       console.log(error)
 
-      setError(error?.response?.data?.message || 'Could not create reservation')
+      setError(
+        error?.response?.data?.message || 'Could not create reservation'
+      )
     }
   }
 
   useEffect(() => {
     loadMedicineDetails()
   }, [id])
+
+  const filteredAvailability = availability.filter((item) =>
+    item.pharmacy.location
+      .toLowerCase()
+      .includes(locationFilter.toLowerCase())
+  )
 
   if (loading) {
     return <p className="page-message">Loading...</p>
@@ -106,6 +115,13 @@ function MedicineDetails() {
         <h2>Available Pharmacies</h2>
         <p>Choose a pharmacy to reserve your medicine.</p>
       </div>
+
+      <input
+        type="text"
+        placeholder="Filter by location"
+        value={locationFilter}
+        onChange={(event) => setLocationFilter(event.target.value)}
+      />
 
       {availability.length === 0 ? (
         <p className="page-message">This medicine is currently unavailable.</p>
