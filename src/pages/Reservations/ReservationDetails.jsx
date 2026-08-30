@@ -71,63 +71,90 @@ function ReservationDetails() {
   }, [id])
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   if (error && !reservation) {
-    return <p>{error}</p>
+    return <p className="error page-message">{error}</p>
   }
 
   return (
-    <main>
-      <h1>Reservation Details</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">Reservation Details</h1>
+        <p className="page-subtitle">Review your reservation information.</p>
+      </div>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
-      <h3>{reservation.medicine.name}</h3>
+      <div className="card details-card">
+        <div className="details-heading">
+          <h3 className="card-title">{reservation.medicine.name}</h3>
 
-      <p>Dosage: {reservation.medicine.dosage}</p>
-
-      <p>Pharmacy: {reservation.pharmacy.name}</p>
-
-      <p>Location: {reservation.pharmacy.location}</p>
-
-      <p>Quantity: {reservation.quantity}</p>
-
-      <p>Status: {reservation.status}</p>
-
-      {reservation.prescription ? (
-        <div>
-          <p>Prescription uploaded</p>
-
-          <a
-            href={reservation.prescription.imageUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View Prescription
-          </a>
+          <span className="badge badge-light">{reservation.status}</span>
         </div>
-      ) : (
-        reservation.medicine.requiresPrescription && (
-          <form onSubmit={handlePrescription}>
-            <h3>Upload Prescription</h3>
 
-            <input
-              type="text"
-              placeholder="Prescription image URL"
-              value={imageUrl}
-              onChange={(event) => setImageUrl(event.target.value)}
-            />
+        <p>
+          <span className="card-label">Dosage:</span>{' '}
+          {reservation.medicine.dosage}
+        </p>
 
-            <button type="submit">Upload Prescription</button>
-          </form>
-        )
-      )}
+        <p>
+          <span className="card-label">Pharmacy:</span>{' '}
+          {reservation.pharmacy.name}
+        </p>
 
-      {reservation.status === 'Pending' && (
-        <button onClick={handleCancel}>Cancel Reservation</button>
-      )}
+        <p>
+          <span className="card-label">Location:</span>{' '}
+          {reservation.pharmacy.location}
+        </p>
+
+        <p>
+          <span className="card-label">Quantity:</span> {reservation.quantity}
+        </p>
+
+        {reservation.prescription ? (
+          <div className="prescription-section">
+            <p className="success">Prescription uploaded</p>
+
+            <a
+              className="btn btn-light"
+              href={reservation.prescription.imageUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Prescription
+            </a>
+          </div>
+        ) : (
+          reservation.medicine.requiresPrescription && (
+            <form
+              className="prescription-section"
+              onSubmit={handlePrescription}
+            >
+              <h3>Upload Prescription</h3>
+
+              <input
+                className="form-input"
+                type="text"
+                placeholder="Prescription image URL"
+                value={imageUrl}
+                onChange={(event) => setImageUrl(event.target.value)}
+              />
+
+              <button className="btn btn-primary" type="submit">
+                Upload Prescription
+              </button>
+            </form>
+          )
+        )}
+
+        {reservation.status === 'Pending' && (
+          <button className="btn btn-danger" onClick={handleCancel}>
+            Cancel Reservation
+          </button>
+        )}
+      </div>
     </main>
   )
 }

@@ -321,3 +321,64 @@ a {
   display: block;
   width: fit-content;
 }
+
+/* Details */
+
+.details-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.details-heading .card-title {
+  margin: 0;
+}
+
+/* Forms */
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-medium);
+}
+
+/* Prescription */
+
+.prescription-section {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.prescription-section h3 {
+  margin-top: 0;
+  color: var(--primary-dark);
+}
+
+.prescription-section .form-input {
+  margin-bottom: 12px;
+}
+
+/* Danger Button */
+
+.btn-danger {
+  margin-top: 20px;
+  background-color: #f3dddd;
+  color: #9b3434;
+}
+
+.btn-danger:hover {
+  background-color: #e9caca;
+}
