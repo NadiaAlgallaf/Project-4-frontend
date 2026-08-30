@@ -235,3 +235,62 @@ a {
   background-color: var(--primary-light);
   color: var(--primary-dark);
 }
+
+/* Sections */
+
+.section-header {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin-bottom: 6px;
+  color: var(--primary-dark);
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+/* Details */
+
+.details-card {
+  max-width: 600px;
+}
+
+/* Reservation Actions */
+
+.reservation-actions {
+  margin-top: 20px;
+}
+
+.reservation-actions label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.quantity-input {
+  width: 70px;
+  padding: 9px;
+
+  margin-right: 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: var(--primary-medium);
+}
+
+/* Messages */
+
+.success {
+  color: var(--primary);
+}
