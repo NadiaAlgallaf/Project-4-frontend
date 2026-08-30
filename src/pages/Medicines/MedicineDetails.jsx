@@ -69,33 +69,52 @@ function MedicineDetails() {
   )
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   if (error && !medicine) {
-    return <p>{error}</p>
+    return <p className="error page-message">{error}</p>
   }
 
   return (
-    <main>
-      <h1>{medicine.name}</h1>
+    <main className="page-container">
+      <div className="card details-card">
+        <h1 className="page-title">{medicine.name}</h1>
 
-      <p>Dosage: {medicine.dosage}</p>
+        <p>
+          <span className="card-label">Dosage:</span> {medicine.dosage}
+        </p>
 
-      <p>Category: {medicine.category}</p>
+        <p>
+          <span className="card-label">Category:</span> {medicine.category}
+        </p>
 
-      <p>Price: {medicine.price} BD</p>
+        <p>
+          <span className="card-label">Price:</span> {medicine.price} BD
+        </p>
 
-      <p>
-        {medicine.requiresPrescription
-          ? 'Prescription Required'
-          : 'No Prescription Required'}
-      </p>
+        <p>
+          <span
+            className={
+              medicine.requiresPrescription
+                ? 'badge badge-gold'
+                : 'badge badge-light'
+            }
+          >
+            {medicine.requiresPrescription
+              ? 'Prescription Required'
+              : 'No Prescription Required'}
+          </span>
+        </p>
+      </div>
 
-      {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
 
-      <h2>Available Pharmacies</h2>
+      <div className="section-header">
+        <h2>Available Pharmacies</h2>
+        <p>Choose a pharmacy to reserve your medicine.</p>
+      </div>
 
       <input
         type="text"
@@ -105,50 +124,60 @@ function MedicineDetails() {
       />
 
       {availability.length === 0 ? (
-        <p>This medicine is currently unavailable.</p>
-      ) : filteredAvailability.length === 0 ? (
-        <p>No pharmacies found in this location.</p>
+        <p className="page-message">This medicine is currently unavailable.</p>
       ) : (
-        filteredAvailability.map((item) => (
-          <div key={item._id}>
-            <h3>{item.pharmacy.name}</h3>
+        <div className="card-grid">
+          {availability.map((item) => (
+            <div className="card" key={item._id}>
+              <h3 className="card-title">{item.pharmacy.name}</h3>
 
-            <p>Location: {item.pharmacy.location}</p>
+              <p>
+                <span className="card-label">Location:</span>{' '}
+                {item.pharmacy.location}
+              </p>
 
-            <p>Phone: {item.pharmacy.phone}</p>
+              <p>
+                <span className="card-label">Phone:</span> {item.pharmacy.phone}
+              </p>
 
-            <p>Stock: {item.stock}</p>
+              <p>
+                <span className="card-label">Stock:</span> {item.stock}
+              </p>
 
-            {user?.role === 'User' ? (
-              <>
-                <label htmlFor={`quantity-${item._id}`}>Quantity: </label>
+              {user?.role === 'User' ? (
+                <div className="reservation-actions">
+                  <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
 
-                <input
-                  type="number"
-                  id={`quantity-${item._id}`}
-                  min="1"
-                  max={item.stock}
-                  value={quantity}
-                  onChange={(event) =>
-                    setQuantity(Number(event.target.value))
-                  }
-                />
+                  <input
+                    className="quantity-input"
+                    type="number"
+                    id={`quantity-${item._id}`}
+                    min="1"
+                    max={item.stock}
+                    value={quantity}
+                    onChange={(event) =>
+                      setQuantity(Number(event.target.value))
+                    }
+                  />
 
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleReserve(item.pharmacy._id)}
+                  >
+                    Reserve
+                  </button>
+                </div>
+              ) : !user ? (
                 <button
-                  onClick={() => handleReserve(item.pharmacy._id)}
+                  className="btn btn-primary"
+                  onClick={() => navigate('/sign-in')}
                 >
-                  Reserve
+                  Sign in to Reserve
                 </button>
-              </>
-            ) : !user ? (
-              <button onClick={() => navigate('/sign-in')}>
-                Sign in to Reserve
-              </button>
-            ) : null}
-
-            <hr />
-          </div>
-        ))
+              ) : null}
+            </div>
+          ))}
+        </div>
       )}
     </main>
   )

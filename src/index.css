@@ -125,3 +125,302 @@ a {
   background-color: var(--primary-medium);
   color: var(--white);
 }
+
+/* Page Layout */
+
+.page-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.page-header {
+  margin-bottom: 25px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 32px;
+  color: var(--primary-dark);
+}
+
+.page-subtitle {
+  margin-top: 8px;
+  color: var(--text-light);
+}
+
+.page-message {
+  text-align: center;
+  color: var(--text-light);
+  margin-top: 40px;
+}
+
+/* Search */
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 15px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+
+  background-color: var(--white);
+
+  margin-bottom: 30px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-medium);
+}
+
+/* Cards */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  background-color: var(--white);
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  padding: 22px;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 18px;
+
+  color: var(--primary-dark);
+  font-size: 20px;
+}
+
+.card p {
+  margin: 10px 0;
+  color: var(--text-light);
+}
+
+.card-label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Badges */
+
+.badge {
+  display: inline-block;
+
+  padding: 6px 10px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.badge-gold {
+  background-color: var(--gold-light);
+  color: #7a5b00;
+}
+
+.badge-light {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+/* Sections */
+
+.section-header {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin-bottom: 6px;
+  color: var(--primary-dark);
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+/* Details */
+
+.details-card {
+  max-width: 600px;
+}
+
+/* Reservation Actions */
+
+.reservation-actions {
+  margin-top: 20px;
+}
+
+.reservation-actions label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.quantity-input {
+  width: 70px;
+  padding: 9px;
+
+  margin-right: 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: var(--primary-medium);
+}
+
+/* Messages */
+
+.success {
+  color: var(--primary);
+}
+
+/* Card List */
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-list .card {
+  position: relative;
+  padding: 24px;
+}
+
+.card-list .card-title {
+  margin: 0 0 18px;
+}
+
+.card-list .card p {
+  display: inline-block;
+  margin: 0 35px 20px 0;
+}
+
+.card-list .btn {
+  display: block;
+  width: fit-content;
+}
+
+/* Details */
+
+.details-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.details-heading .card-title {
+  margin: 0;
+}
+
+/* Forms */
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-medium);
+}
+
+/* Prescription */
+
+.prescription-section {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.prescription-section h3 {
+  margin-top: 0;
+  color: var(--primary-dark);
+}
+
+.prescription-section .form-input {
+  margin-bottom: 12px;
+}
+
+/* Danger Button */
+
+.btn-danger {
+  margin-top: 20px;
+  background-color: #f3dddd;
+  color: #9b3434;
+}
+
+.btn-danger:hover {
+  background-color: #e9caca;
+}
+
+/* Forms */
+
+.form-card {
+  max-width: 620px;
+  margin: 0 auto;
+
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  padding: 32px;
+}
+
+.form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

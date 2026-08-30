@@ -48,48 +48,62 @@ const SignInForm = () => {
   }
 
   return (
-    <main>
-      <h1>{t('auth.signIn.title')}</h1>
+    <main className="page-container">
+      <div className="form-card">
+        <div className="page-header">
+          <h1 className="page-title">{t('auth.signIn.title')}</h1>
 
-      {error && <p className="error">{error}</p>}
-
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">{t('auth.signIn.username')}:</label>
-
-          <input
-            type="text"
-            autoComplete="off"
-            id="username"
-            value={formData.username}
-            name="username"
-            onChange={handleChange}
-            required
-          />
+          <p className="page-subtitle">Sign in to your Dawa account.</p>
         </div>
 
-        <div>
-          <label htmlFor="password">{t('auth.signIn.password')}:</label>
+        {error && <p className="error">{error}</p>}
 
-          <input
-            type="password"
-            autoComplete="off"
-            id="password"
-            value={formData.password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form className="form" autoComplete="off" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">{t('auth.signIn.username')}:</label>
 
-        <div>
-          <button type="submit">{t('auth.signIn.submit')}</button>
+            <input
+              className="form-input"
+              type="text"
+              autoComplete="off"
+              id="username"
+              value={formData.username}
+              name="username"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <button type="button" onClick={() => navigate('/')}>
-            {t('auth.signIn.cancel')}
-          </button>
-        </div>
-      </form>
+          <div className="form-group">
+            <label htmlFor="password">{t('auth.signIn.password')}:</label>
+
+            <input
+              className="form-input"
+              type="password"
+              autoComplete="off"
+              id="password"
+              value={formData.password}
+              name="password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-actions">
+            <button className="btn btn-primary" type="submit">
+              {t('auth.signIn.submit')}
+            </button>
+
+            <button
+              className="btn btn-light"
+              type="button"
+              onClick={() => navigate('/')}
+            >
+              {t('auth.signIn.cancel')}
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   )
 }

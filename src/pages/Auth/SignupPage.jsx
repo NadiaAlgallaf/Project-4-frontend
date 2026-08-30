@@ -85,163 +85,188 @@ function Signup() {
   }
 
   return (
-    <main>
-      <h1>{t('auth.signUp.title')}</h1>
-
-      {error && <p className="error">{error}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="role">Account Type:</label>
-
-          <select
-            id="role"
-            name="role"
-            value={role}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select account type</option>
-            <option value="User">User</option>
-            <option value="Pharmacy">Pharmacy</option>
-          </select>
+    <main className="page-container">
+      <div className="form-card">
+        <div className="page-header">
+          <h1 className="page-title">{t('auth.signUp.title')}</h1>
+          <p className="page-subtitle">Create your Dawa account.</p>
         </div>
 
-        <div>
-          <label htmlFor="username">{t('auth.signUp.username')}:</label>
+        {error && <p className="error">{error}</p>}
 
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={username}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="role">Account Type:</label>
 
-        {role === 'User' && (
-          <>
-            <div>
-              <label htmlFor="firstName">First Name:</label>
+            <select
+              className="form-input"
+              id="role"
+              name="role"
+              value={role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select account type</option>
+              <option value="User">User</option>
+              <option value="Pharmacy">Pharmacy</option>
+            </select>
+          </div>
 
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={firstName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="username">{t('auth.signUp.username')}:</label>
 
-            <div>
-              <label htmlFor="lastName">Last Name:</label>
+            <input
+              className="form-input"
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={lastName}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </>
-        )}
+          {role === 'User' && (
+            <>
+              <div className="form-group">
+                <label htmlFor="firstName">First Name:</label>
 
-        <div>
-          <label htmlFor="email">Email:</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={firstName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+              <div className="form-group">
+                <label htmlFor="lastName">Last Name:</label>
 
-        <div>
-          <label htmlFor="password">{t('auth.signUp.password')}:</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </>
+          )}
 
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
 
-        <div>
-          <label htmlFor="confirm">{t('auth.signUp.confirmPassword')}:</label>
+            <input
+              className="form-input"
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            id="confirm"
-            name="passwordConf"
-            value={passwordConf}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="password">{t('auth.signUp.password')}:</label>
 
-        {role === 'Pharmacy' && (
-          <>
-            <div>
-              <label htmlFor="pharmacyName">Pharmacy Name:</label>
+            <input
+              className="form-input"
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-              <input
-                type="text"
-                id="pharmacyName"
-                name="pharmacyName"
-                value={pharmacyName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="confirm">{t('auth.signUp.confirmPassword')}:</label>
 
-            <div>
-              <label htmlFor="location">Location:</label>
+            <input
+              className="form-input"
+              type="password"
+              id="confirm"
+              name="passwordConf"
+              value={passwordConf}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={location}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          {role === 'Pharmacy' && (
+            <>
+              <div className="form-group">
+                <label htmlFor="pharmacyName">Pharmacy Name:</label>
 
-            <div>
-              <label htmlFor="phone">Phone:</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="pharmacyName"
+                  name="pharmacyName"
+                  value={pharmacyName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </>
-        )}
+              <div className="form-group">
+                <label htmlFor="location">Location:</label>
 
-        <div>
-          <button type="submit" disabled={isFormInvalid() || submitting}>
-            {submitting ? t('auth.signUp.submitting') : t('auth.signUp.submit')}
-          </button>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={location}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-          <button type="button" onClick={() => navigate('/')}>
-            {t('auth.signUp.cancel')}
-          </button>
-        </div>
-      </form>
+              <div className="form-group">
+                <label htmlFor="phone">Phone:</label>
+
+                <input
+                  className="form-input"
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </>
+          )}
+
+          <div className="form-actions">
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={isFormInvalid() || submitting}
+            >
+              {submitting
+                ? t('auth.signUp.submitting')
+                : t('auth.signUp.submit')}
+            </button>
+
+            <button
+              className="btn btn-light"
+              type="button"
+              onClick={() => navigate('/')}
+            >
+              {t('auth.signUp.cancel')}
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   )
 }

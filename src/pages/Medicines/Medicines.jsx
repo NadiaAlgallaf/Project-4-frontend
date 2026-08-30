@@ -29,44 +29,70 @@ function Medicines() {
   )
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   return (
-    <main>
-      <h1>Medicines</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">Medicines</h1>
+        <p className="page-subtitle">Search and find available medicines.</p>
+      </div>
 
       <input
+        className="search-input"
         type="text"
         placeholder="Search for a medicine"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
       />
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {filteredMedicines.length === 0 ? (
-        <p>No medicines found.</p>
+        <p className="page-message">No medicines found.</p>
       ) : (
-        filteredMedicines.map((medicine) => (
-          <div key={medicine._id}>
-            <h3>{medicine.name}</h3>
+        <div className="card-grid">
+          {filteredMedicines.map((medicine) => (
+            <div className="card" key={medicine._id}>
+              <h3 className="card-title">{medicine.name}</h3>
 
-            <p>Dosage: {medicine.dosage}</p>
-            <p>Category: {medicine.category}</p>
-            <p>Price: {medicine.price} BD</p>
+              <p>
+                <span className="card-label">Dosage:</span> {medicine.dosage}
+              </p>
 
-            <p>
-              {medicine.requiresPrescription
-                ? 'Prescription Required'
-                : 'No Prescription Required'}
-            </p>
+              <p>
+                <span className="card-label">Category:</span>{' '}
+                {medicine.category}
+              </p>
 
-            <Link to={`/medicines/${medicine._id}`}>View Details</Link>
+              <p>
+                <span className="card-label">Price:</span> {medicine.price} BD
+              </p>
 
-            <hr />
-          </div>
-        ))
+              <p>
+                <span
+                  className={
+                    medicine.requiresPrescription
+                      ? 'badge badge-gold'
+                      : 'badge badge-light'
+                  }
+                >
+                  {medicine.requiresPrescription
+                    ? 'Prescription Required'
+                    : 'No Prescription Required'}
+                </span>
+              </p>
+
+              <Link
+                className="btn btn-primary"
+                to={`/medicines/${medicine._id}`}
+              >
+                View Details
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </main>
   )
