@@ -16,6 +16,7 @@ function MedicineDetails() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [quantity, setQuantity] = useState(1)
+  const [locationFilter, setLocationFilter] = useState('')
 
   async function loadMedicineDetails() {
     try {
@@ -51,13 +52,21 @@ function MedicineDetails() {
     } catch (error) {
       console.log(error)
 
-      setError(error?.response?.data?.message || 'Could not create reservation')
+      setError(
+        error?.response?.data?.message || 'Could not create reservation'
+      )
     }
   }
 
   useEffect(() => {
     loadMedicineDetails()
   }, [id])
+
+  const filteredAvailability = availability.filter((item) =>
+    item.pharmacy.location
+      .toLowerCase()
+      .includes(locationFilter.toLowerCase())
+  )
 
   if (loading) {
     return <p>Loading...</p>
@@ -88,10 +97,19 @@ function MedicineDetails() {
 
       <h2>Available Pharmacies</h2>
 
+      <input
+        type="text"
+        placeholder="Filter by location"
+        value={locationFilter}
+        onChange={(event) => setLocationFilter(event.target.value)}
+      />
+
       {availability.length === 0 ? (
         <p>This medicine is currently unavailable.</p>
+      ) : filteredAvailability.length === 0 ? (
+        <p>No pharmacies found in this location.</p>
       ) : (
-        availability.map((item) => (
+        filteredAvailability.map((item) => (
           <div key={item._id}>
             <h3>{item.pharmacy.name}</h3>
 
@@ -103,7 +121,7 @@ function MedicineDetails() {
 
             {user?.role === 'User' ? (
               <>
-                <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
+                <label htmlFor={`quantity-${item._id}`}>Quantity: </label>
 
                 <input
                   type="number"
@@ -111,10 +129,14 @@ function MedicineDetails() {
                   min="1"
                   max={item.stock}
                   value={quantity}
-                  onChange={(event) => setQuantity(Number(event.target.value))}
+                  onChange={(event) =>
+                    setQuantity(Number(event.target.value))
+                  }
                 />
 
-                <button onClick={() => handleReserve(item.pharmacy._id)}>
+                <button
+                  onClick={() => handleReserve(item.pharmacy._id)}
+                >
                   Reserve
                 </button>
               </>
