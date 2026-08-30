@@ -16,6 +16,7 @@ function MedicineDetails() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [quantity, setQuantity] = useState(1)
+  const [locationFilter, setLocationFilter] = useState('')
 
   async function loadMedicineDetails() {
     try {
@@ -51,13 +52,21 @@ function MedicineDetails() {
     } catch (error) {
       console.log(error)
 
-      setError(error?.response?.data?.message || 'Could not create reservation')
+      setError(
+        error?.response?.data?.message || 'Could not create reservation'
+      )
     }
   }
 
   useEffect(() => {
     loadMedicineDetails()
   }, [id])
+
+  const filteredAvailability = availability.filter((item) =>
+    item.pharmacy.location
+      .toLowerCase()
+      .includes(locationFilter.toLowerCase())
+  )
 
   if (loading) {
     return <p className="page-message">Loading...</p>
@@ -107,11 +116,24 @@ function MedicineDetails() {
         <p>Choose a pharmacy to reserve your medicine.</p>
       </div>
 
+      <input
+        type="text"
+        placeholder="Filter by location"
+        value={locationFilter}
+        onChange={(event) => setLocationFilter(event.target.value)}
+      />
+
       {availability.length === 0 ? (
-        <p className="page-message">This medicine is currently unavailable.</p>
+        <p className="page-message">
+          This medicine is currently unavailable.
+        </p>
+      ) : filteredAvailability.length === 0 ? (
+        <p className="page-message">
+          No pharmacies found in this location.
+        </p>
       ) : (
         <div className="card-grid">
-          {availability.map((item) => (
+          {filteredAvailability.map((item) => (
             <div className="card" key={item._id}>
               <h3 className="card-title">{item.pharmacy.name}</h3>
 
@@ -121,16 +143,19 @@ function MedicineDetails() {
               </p>
 
               <p>
-                <span className="card-label">Phone:</span> {item.pharmacy.phone}
+                <span className="card-label">Phone:</span>{' '}
+                {item.pharmacy.phone}
               </p>
 
               <p>
-                <span className="card-label">Stock:</span> {item.stock}
+                <span className="card-label">Stock:</span>{' '} {item.stock}
               </p>
 
               {user?.role === 'User' ? (
                 <div className="reservation-actions">
-                  <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
+                  <label htmlFor={`quantity-${item._id}`}>
+                    Quantity:
+                  </label>
 
                   <input
                     className="quantity-input"
@@ -147,17 +172,13 @@ function MedicineDetails() {
                   <button
                     className="btn btn-primary"
                     onClick={() => handleReserve(item.pharmacy._id)}
-                  >
-                    Reserve
-                  </button>
+                  > Reserve </button>
                 </div>
               ) : !user ? (
                 <button
                   className="btn btn-primary"
                   onClick={() => navigate('/sign-in')}
-                >
-                  Sign in to Reserve
-                </button>
+                > Sign in to Reserve </button>
               ) : null}
             </div>
           ))}
