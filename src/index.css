@@ -294,3 +294,30 @@ a {
 .success {
   color: var(--primary);
 }
+
+/* Card List */
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-list .card {
+  position: relative;
+  padding: 24px;
+}
+
+.card-list .card-title {
+  margin: 0 0 18px;
+}
+
+.card-list .card p {
+  display: inline-block;
+  margin: 0 35px 20px 0;
+}
+
+.card-list .btn {
+  display: block;
+  width: fit-content;
+}
