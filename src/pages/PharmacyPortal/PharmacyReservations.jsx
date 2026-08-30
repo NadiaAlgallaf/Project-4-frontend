@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getPharmacyReservations, updateReservationStatus} from '../../services/reservationService'
+import {
+  getPharmacyReservations,
+  updateReservationStatus
+} from '../../services/reservationService'
 
 function PharmacyReservations() {
   const [reservations, setReservations] = useState([])
@@ -41,64 +44,99 @@ function PharmacyReservations() {
   }, [])
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   return (
-    <main>
-      <h1>Pharmacy Reservations</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">Pharmacy Reservations</h1>
 
-      {error && <p>{error}</p>}
+        <p className="page-subtitle">
+          Review customer reservations and update their status.
+        </p>
+      </div>
+
+      {error && <p className="error">{error}</p>}
 
       {reservations.length === 0 ? (
-        <p>No reservations yet.</p>
+        <p className="page-message">No reservations yet.</p>
       ) : (
-        reservations.map((reservation) => {
-          const nextStatuses = allowedTransitions[reservation.status] || []
+        <div className="reservation-table">
+          <div className="reservation-table-header">
+            <span>Medicine</span>
+            <span>Customer</span>
+            <span>Quantity</span>
+            <span>Status</span>
+            <span>Prescription</span>
+            <span>Action</span>
+          </div>
 
-          return (
-            <div key={reservation._id}>
-              <h3>{reservation.medicine.name}</h3>
+          {reservations.map((reservation) => {
+            const nextStatuses = allowedTransitions[reservation.status] || []
 
-              <p>
-                Customer: {reservation.user.firstName}{' '}
-                {reservation.user.lastName}
-              </p>
+            return (
+              <div className="reservation-table-row" key={reservation._id}>
+                <strong>{reservation.medicine.name}</strong>
 
-              <p>Quantity: {reservation.quantity}</p>
+                <span>
+                  {reservation.user.firstName} {reservation.user.lastName}
+                </span>
 
-              <p>Status: {reservation.status}</p>
+                <span>{reservation.quantity}</span>
 
-              {reservation.prescription && (
-                <p>
-                  Prescription:{' '}
-                  <a href={reservation.prescription.imageUrl} target="_blank" rel="noreferrer">
-                    View Prescription
-                  </a>
-                </p>
-              )}
+                <span>
+                  <span
+                    className={`badge reservation-status status-${reservation.status.toLowerCase()}`}
+                  >
+                    {reservation.status}
+                  </span>
+                </span>
 
-              {nextStatuses.length > 0 && (
-                <select defaultValue="" onChange={(event) => {
-                    if (event.target.value) {
-                      handleStatus( reservation._id, event.target.value
-                      ) }
-                  }}
-                >
-                  <option value="" disabled> Select action </option>
+                <span>
+                  {reservation.prescription ? (
+                    <a
+                      className="btn btn-light reservation-prescription-btn"
+                      href={reservation.prescription.imageUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View
+                    </a>
+                  ) : (
+                    <span className="reservation-empty">—</span>
+                  )}
+                </span>
 
-                  {nextStatuses.map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              )}
+                <span>
+                  {nextStatuses.length > 0 ? (
+                    <select
+                      className="form-input reservation-action-select"
+                      defaultValue=""
+                      onChange={(event) => {
+                        if (event.target.value) {
+                          handleStatus(reservation._id, event.target.value)
+                        }
+                      }}
+                    >
+                      <option value="" disabled>
+                        Select action
+                      </option>
 
-              <hr />
-            </div>
-          )
-        })
+                      {nextStatuses.map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className="reservation-empty">No action</span>
+                  )}
+                </span>
+              </div>
+            )
+          })}
+        </div>
       )}
     </main>
   )
