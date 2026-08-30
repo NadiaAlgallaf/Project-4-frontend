@@ -26,20 +26,32 @@ function PharmacyDetails() {
   }, [id])
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p className="page-message">Loading...</p>
   }
 
   if (error) {
-    return <p>{error}</p>
+    return <p className="error page-message">{error}</p>
   }
 
   return (
-    <main>
-      <h1>{pharmacy.name}</h1>
+    <main className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">{pharmacy.name}</h1>
 
-      <p>Location: {pharmacy.location}</p>
+        <p className="page-subtitle">
+          Pharmacy information and contact details.
+        </p>
+      </div>
 
-      <p>Phone: {pharmacy.phone}</p>
+      <div className="card details-card">
+        <p>
+          <span className="card-label">Location:</span> {pharmacy.location}
+        </p>
+
+        <p>
+          <span className="card-label">Phone:</span> {pharmacy.phone}
+        </p>
+      </div>
     </main>
   )
 }
