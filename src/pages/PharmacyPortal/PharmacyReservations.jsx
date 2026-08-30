@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
-import {
-  getPharmacyReservations,
-  updateReservationStatus
-} from '../../services/reservationService'
+import { getPharmacyReservations, updateReservationStatus} from '../../services/reservationService'
 
 function PharmacyReservations() {
   const [reservations, setReservations] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  const allowedTransitions = {
+    Pending: ['Approved', 'Rejected'],
+    Approved: ['Ready'],
+    Ready: ['Collected'],
+    Rejected: [],
+    Collected: []
+  }
 
   async function loadReservations() {
     try {
@@ -48,47 +53,52 @@ function PharmacyReservations() {
       {reservations.length === 0 ? (
         <p>No reservations yet.</p>
       ) : (
-        reservations.map((reservation) => (
-          <div key={reservation._id}>
-            <h3>{reservation.medicine.name}</h3>
+        reservations.map((reservation) => {
+          const nextStatuses = allowedTransitions[reservation.status] || []
 
-            <p>
-              Customer: {reservation.user.firstName} {reservation.user.lastName}
-            </p>
+          return (
+            <div key={reservation._id}>
+              <h3>{reservation.medicine.name}</h3>
 
-            <p>Quantity: {reservation.quantity}</p>
-
-            <p>Status: {reservation.status}</p>
-
-            {reservation.prescription && (
               <p>
-                Prescription:{' '}
-                <a
-                  href={reservation.prescription.imageUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View Prescription
-                </a>
+                Customer: {reservation.user.firstName}{' '}
+                {reservation.user.lastName}
               </p>
-            )}
 
-            <select
-              value={reservation.status}
-              onChange={(event) =>
-                handleStatus(reservation._id, event.target.value)
-              }
-            >
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Ready">Ready</option>
-              <option value="Collected">Collected</option>
-              <option value="Rejected">Rejected</option>
-            </select>
+              <p>Quantity: {reservation.quantity}</p>
 
-            <hr />
-          </div>
-        ))
+              <p>Status: {reservation.status}</p>
+
+              {reservation.prescription && (
+                <p>
+                  Prescription:{' '}
+                  <a href={reservation.prescription.imageUrl} target="_blank" rel="noreferrer">
+                    View Prescription
+                  </a>
+                </p>
+              )}
+
+              {nextStatuses.length > 0 && (
+                <select defaultValue="" onChange={(event) => {
+                    if (event.target.value) {
+                      handleStatus( reservation._id, event.target.value
+                      ) }
+                  }}
+                >
+                  <option value="" disabled> Select action </option>
+
+                  {nextStatuses.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              <hr />
+            </div>
+          )
+        })
       )}
     </main>
   )
