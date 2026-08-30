@@ -37,13 +37,17 @@ function MedicineDetails() {
       setError('')
       setSuccess('')
 
-      await createReservation({
+      const reservation = await createReservation({
         pharmacy: pharmacyId,
         medicine: medicine._id,
         quantity: quantity
       })
 
-      setSuccess('Reservation created successfully.')
+      if (medicine.requiresPrescription) {
+        navigate(`/reservations/${reservation._id}`)
+      } else {
+        navigate('/my-reservations')
+      }
     } catch (error) {
       console.log(error)
 
