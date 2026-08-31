@@ -115,24 +115,36 @@ function Pharmacies() {
       ) : (
         <div className="card-list">
           {filteredPharmacies.map((pharmacy) => (
-            <div className="card" key={pharmacy._id}>
-              <h3 className="card-title">{pharmacy.name}</h3>
+            <div className="card pharmacy-list-card" key={pharmacy._id}>
+              {pharmacy.pharmacyImg && (
+                <div className="pharmacy-list-image-container">
+                  <img
+                    className="pharmacy-list-image"
+                    src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${pharmacy.pharmacyImg}`}
+                    alt={pharmacy.name}
+                  />
+                </div>
+              )}
 
-              <p>
-                <span className="card-label">Location:</span>{' '}
-                {pharmacy.location}
-              </p>
+              <div className="pharmacy-list-info">
+                <h3 className="card-title">{pharmacy.name}</h3>
 
-              <p>
-                <span className="card-label">Phone:</span> {pharmacy.phone}
-              </p>
+                <p>
+                  <span className="card-label">Location:</span>{' '}
+                  {pharmacy.location}
+                </p>
 
-              <Link
-                className="btn btn-primary"
-                to={`/pharmacies/${pharmacy._id}`}
-              >
-                View Details
-              </Link>
+                <p>
+                  <span className="card-label">Phone:</span> {pharmacy.phone}
+                </p>
+
+                <Link
+                  className="btn btn-primary"
+                  to={`/pharmacies/${pharmacy._id}`}
+                >
+                  View Details
+                </Link>
+              </div>
             </div>
           ))}
         </div>
