@@ -784,3 +784,76 @@ button:disabled {
   height: 400px;
   border-radius: 10px;
 }
+
+/* Pharmacy list cards */
+
+.pharmacy-list-card {
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  min-height: 190px;
+}
+
+.pharmacy-list-image-container {
+  width: 30%;
+  min-width: 220px;
+}
+
+.pharmacy-list-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pharmacy-list-info {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pharmacy-list-info p {
+  margin: 6px 0;
+}
+
+.pharmacy-list-info .btn {
+  margin-top: 14px;
+  align-self: flex-start;
+}
+
+/* Pharmacy details */
+
+.pharmacy-profile-card {
+  display: flex;
+  min-height: 250px;
+  background-color: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.pharmacy-profile-image-container {
+  width: 35%;
+  min-width: 260px;
+}
+
+.pharmacy-profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pharmacy-profile-info {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pharmacy-profile-info p {
+  margin: 6px 0;
+}
