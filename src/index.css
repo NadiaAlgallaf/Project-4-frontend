@@ -725,3 +725,44 @@ button:disabled {
   background-color: #f3dddd;
   color: #9b3434;
 }
+
+/* sign up location map */
+.signup-map {
+  width: 100%;
+  height: 350px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.map-instruction {
+  font-size: 14px;
+  color: #666;
+  margin: 6px 0 10px;
+}
+
+/* pharmacy details location map */
+.pharmacy-map-section {
+  margin-top: 24px;
+}
+
+.pharmacy-details-map {
+  width: 100%;
+  height: 350px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* pharmacy details location map */
+.pharmacies-map-section {
+  margin: 24px 0;
+}
+
+.pharmacies-map-section h2 {
+  margin-bottom: 10px;
+}
+
+.pharmacies-map {
+  width: 100%;
+  height: 400px;
+  border-radius: 10px;
+}

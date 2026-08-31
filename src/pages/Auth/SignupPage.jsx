@@ -1,11 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { signUp } from '../../services/authService.js'
 import { useTranslation } from 'react-i18next'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
 function Signup() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+
+  const mapRef = useRef(null)
+  const mapInstanceRef = useRef(null)
+  const markerRef = useRef(null)
 
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -20,7 +26,9 @@ function Signup() {
     role: '',
     pharmacyName: '',
     location: '',
-    phone: ''
+    phone: '',
+    latitude: '',
+    longitude: ''
   })
 
   const {
@@ -33,7 +41,9 @@ function Signup() {
     role,
     pharmacyName,
     location,
-    phone
+    phone,
+    latitude,
+    longitude
   } = formData
 
   function handleChange(event) {
@@ -44,6 +54,47 @@ function Signup() {
       [event.target.name]: event.target.value
     })
   }
+
+  useEffect(() => {
+    if (role !== 'Pharmacy') {
+      return
+    }
+
+    if (!mapRef.current || mapInstanceRef.current) {
+      return
+    }
+
+    const map = L.map(mapRef.current).setView([26.2235, 50.5876], 11)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map)
+
+    map.on('click', function (event) {
+      const selectedLatitude = event.latlng.lat
+      const selectedLongitude = event.latlng.lng
+
+      setFormData((currentData) => ({
+        ...currentData,
+        latitude: selectedLatitude,
+        longitude: selectedLongitude
+      }))
+
+      if (markerRef.current) {
+        markerRef.current.setLatLng(event.latlng)
+      } else {
+        markerRef.current = L.marker(event.latlng).addTo(map)
+      }
+    })
+
+    mapInstanceRef.current = map
+
+    return () => {
+      map.remove()
+      mapInstanceRef.current = null
+      markerRef.current = null
+    }
+  }, [role])
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -78,7 +129,13 @@ function Signup() {
     }
 
     if (role === 'Pharmacy') {
-      return !pharmacyName || !location || !phone
+      return (
+        !pharmacyName ||
+        !location ||
+        !phone ||
+        latitude === '' ||
+        longitude === ''
+      )
     }
 
     return true
@@ -217,6 +274,20 @@ function Signup() {
               </div>
 
               <div className="form-group">
+                <label htmlFor="phone">Phone:</label>
+
+                <input
+                  className="form-input"
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
                 <label htmlFor="location">Location:</label>
 
                 <input
@@ -231,17 +302,17 @@ function Signup() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="phone">Phone:</label>
+                <label>Select Pharmacy Location:</label>
 
-                <input
-                  className="form-input"
-                  type="text"
-                  id="phone"
-                  name="phone"
-                  value={phone}
-                  onChange={handleChange}
-                  required
-                />
+                <p className="map-instruction">
+                  Click on the map to select your pharmacy location.
+                </p>
+
+                <div ref={mapRef} className="signup-map"></div>
+
+                {latitude !== '' && longitude !== '' && (
+                  <p>Location selected</p>
+                )}
               </div>
             </>
           )}
