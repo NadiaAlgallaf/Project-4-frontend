@@ -28,10 +28,12 @@ async function cancelReservation(id) {
   return response.data
 }
 
-async function uploadPrescription(id, imageUrl) {
-  const response = await api.post(`/reservations/${id}/prescription`, {
-    imageUrl
-  })
+async function uploadPrescription(id, file) {
+  const formData = new FormData()
+
+  formData.append('prescription', file)
+
+  const response = await api.post(`/reservations/${id}/prescription`, formData)
 
   return response.data
 }

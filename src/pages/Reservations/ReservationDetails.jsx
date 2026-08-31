@@ -11,7 +11,7 @@ function ReservationDetails() {
   const navigate = useNavigate()
 
   const [reservation, setReservation] = useState(null)
-  const [imageUrl, setImageUrl] = useState('')
+  const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -50,15 +50,16 @@ function ReservationDetails() {
   async function handlePrescription(event) {
     event.preventDefault()
 
-    if (!imageUrl) {
-      setError('Please enter a prescription image URL')
+    if (!file) {
+      setError('Please select a prescription image')
       return
     }
 
     try {
-      await uploadPrescription(id, imageUrl)
+      await uploadPrescription(id, file)
 
-      setImageUrl('')
+      setFile(null)
+      setError('')
       loadReservation()
     } catch (error) {
       console.log(error)
@@ -82,6 +83,7 @@ function ReservationDetails() {
     <main className="page-container">
       <div className="page-header">
         <h1 className="page-title">Reservation Details</h1>
+
         <p className="page-subtitle">Review your reservation information.</p>
       </div>
 
@@ -119,7 +121,7 @@ function ReservationDetails() {
 
             <a
               className="btn btn-light"
-              href={reservation.prescription.imageUrl}
+              href={`${import.meta.env.VITE_BACK_END_SERVER_URL}${reservation.prescription.prescriptionImg}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -136,10 +138,9 @@ function ReservationDetails() {
 
               <input
                 className="form-input"
-                type="text"
-                placeholder="Prescription image URL"
-                value={imageUrl}
-                onChange={(event) => setImageUrl(event.target.value)}
+                type="file"
+                accept="image/png, image/jpeg"
+                onChange={(event) => setFile(event.target.files[0])}
               />
 
               <button className="btn btn-primary" type="submit">

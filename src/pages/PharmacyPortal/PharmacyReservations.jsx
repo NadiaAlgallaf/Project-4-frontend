@@ -97,7 +97,7 @@ function PharmacyReservations() {
                   {reservation.prescription ? (
                     <a
                       className="btn btn-light reservation-prescription-btn"
-                      href={reservation.prescription.imageUrl}
+                      href={`${import.meta.env.VITE_BACK_END_SERVER_URL}${reservation.prescription.prescriptionImg}`}
                       target="_blank"
                       rel="noreferrer"
                     >
