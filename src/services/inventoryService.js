@@ -20,6 +20,12 @@ async function getMedicineAvailability(medicineId) {
   return response.data
 }
 
+async function getPharmacyInventory(pharmacyId) {
+  const response = await api.get(`/inventory/pharmacy/${pharmacyId}`)
+
+  return response.data
+}
+
 export async function updateInventoryStock(id, stock) {
   const res = await api.patch(`/inventory/${id}`, {
     stock
@@ -33,4 +39,4 @@ async function deleteMedicine(id) {
   return response.data
 }
 
-export { getMyInventory, addMedicine, getMedicineAvailability, deleteMedicine }
+export { getMyInventory, addMedicine, getMedicineAvailability, getPharmacyInventory ,deleteMedicine }
