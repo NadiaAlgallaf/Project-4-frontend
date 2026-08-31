@@ -739,3 +739,15 @@ button:disabled {
   color: #666;
   margin: 6px 0 10px;
 }
+
+/* pharmacy details location map */
+.pharmacy-map-section {
+  margin-top: 24px;
+}
+
+.pharmacy-details-map {
+  width: 100%;
+  height: 350px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
