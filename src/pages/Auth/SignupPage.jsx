@@ -28,7 +28,8 @@ function Signup() {
     location: '',
     phone: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    pharmacyImg: null
   })
 
   const {
@@ -43,7 +44,8 @@ function Signup() {
     location,
     phone,
     latitude,
-    longitude
+    longitude,
+    pharmacyImg
   } = formData
 
   function handleChange(event) {
@@ -101,8 +103,31 @@ function Signup() {
 
     try {
       setSubmitting(true)
+      setError('')
 
-      await signUp(formData)
+      const signupData = new FormData()
+
+      signupData.append('username', username)
+      signupData.append('firstName', firstName)
+      signupData.append('lastName', lastName)
+      signupData.append('email', email)
+      signupData.append('password', password)
+      signupData.append('passwordConf', passwordConf)
+      signupData.append('role', role)
+
+      if (role === 'Pharmacy') {
+        signupData.append('pharmacyName', pharmacyName)
+        signupData.append('location', location)
+        signupData.append('phone', phone)
+        signupData.append('latitude', latitude)
+        signupData.append('longitude', longitude)
+
+        if (pharmacyImg) {
+          signupData.append('pharmacyImg', pharmacyImg)
+        }
+      }
+
+      await signUp(signupData)
 
       navigate('/sign-in')
     } catch (err) {
@@ -146,6 +171,7 @@ function Signup() {
       <div className="form-card">
         <div className="page-header">
           <h1 className="page-title">{t('auth.signUp.title')}</h1>
+
           <p className="page-subtitle">Create your Dawa account.</p>
         </div>
 
@@ -164,7 +190,9 @@ function Signup() {
               required
             >
               <option value="">Select account type</option>
+
               <option value="User">User</option>
+
               <option value="Pharmacy">Pharmacy</option>
             </select>
           </div>
@@ -298,6 +326,23 @@ function Signup() {
                   value={location}
                   onChange={handleChange}
                   required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="pharmacyImg">Pharmacy Image:</label>
+
+                <input
+                  className="form-input"
+                  type="file"
+                  id="pharmacyImg"
+                  accept="image/png, image/jpeg, image/jpg"
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      pharmacyImg: event.target.files[0]
+                    })
+                  }
                 />
               </div>
 
