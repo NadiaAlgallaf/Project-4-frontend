@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { getPharmacyById } from '../../services/pharmacyService'
+import { getPharmacyInventory } from '../../services/inventoryService'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -11,21 +12,24 @@ function PharmacyDetails() {
   const mapInstanceRef = useRef(null)
 
   const [pharmacy, setPharmacy] = useState(null)
+  const [inventory, setInventory] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  async function loadPharmacy() {
-    try {
-      const data = await getPharmacyById(id)
-      setPharmacy(data)
-    } catch (error) {
-      console.log(error)
-      setError('Could not load pharmacy')
-    } finally {
-      setLoading(false)
-    }
-  }
+async function loadPharmacy() {
+  try {
+    const data = await getPharmacyById(id)
+    const inventoryData = await getPharmacyInventory(id)
 
+    setPharmacy(data)
+    setInventory(inventoryData)
+  } catch (error) {
+    console.log(error)
+    setError('Could not load pharmacy')
+  } finally {
+    setLoading(false)
+  }
+}
   useEffect(() => {
     loadPharmacy()
   }, [id])
@@ -88,7 +92,62 @@ function PharmacyDetails() {
         <h2>Pharmacy Location</h2>
 
         <div ref={mapRef} className="pharmacy-details-map"></div>
+
+    
       </div>
+
+      <div className="section-header">
+  <h2>Available Medicines</h2>
+  <p>Medicines currently available at this pharmacy.</p>
+</div>
+
+{inventory.length === 0 ? (
+  <p className="page-message">
+    No medicines currently available.
+  </p>
+) : (
+  <div className="card-grid">
+    {inventory.map((item) => (
+      <div className="card" key={item._id}>
+        <h3 className="card-title">{item.medicine.name}</h3>
+
+        <p>
+          <span className="card-label">Dosage:</span>{' '}
+          {item.medicine.dosage}
+        </p>
+
+        <p>
+          <span className="card-label">Category:</span>{' '}
+          {item.medicine.category}
+        </p>
+
+        <p>
+          <span className="card-label">Price:</span>{' '}
+          {item.medicine.price} BD
+        </p>
+
+        <p>
+          <span className="card-label">Stock:</span>{' '}
+          {item.stock}
+        </p>
+
+        <p>
+          <span
+            className={
+              item.medicine.requiresPrescription
+                ? 'badge badge-gold'
+                : 'badge badge-light'
+            }
+          >
+            {item.medicine.requiresPrescription
+              ? 'Prescription Required'
+              : 'No Prescription Required'}
+          </span>
+        </p>
+      </div>
+    ))}
+  </div>
+)}
     </main>
   )
 }
