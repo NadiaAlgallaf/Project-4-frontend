@@ -552,7 +552,6 @@ button:disabled {
 .inventory-table-header,
 .inventory-table-row {
   display: grid;
-
   grid-template-columns:
     1.2fr
     0.75fr
@@ -561,34 +560,35 @@ button:disabled {
     0.55fr
     1fr
     2.1fr;
-
   align-items: center;
   gap: 15px;
-
   padding: 16px 20px;
 }
 
 .inventory-table-header {
   background-color: var(--primary-extra-light);
-
   color: var(--primary-dark);
-
   font-size: 13px;
   font-weight: 600;
-
   border-bottom: 1px solid var(--border);
+}
+
+.inventory-table-header span {
+  text-align: center;
 }
 
 .inventory-table-row {
   min-height: 76px;
-
   border-bottom: 1px solid var(--border);
-
   font-size: 14px;
 }
 
 .inventory-table-row:last-child {
   border-bottom: none;
+}
+
+.inventory-table-row > span {
+  text-align: center;
 }
 
 .inventory-table-row strong {
@@ -602,19 +602,18 @@ button:disabled {
 .inventory-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
 }
 
 .stock-input {
   width: 65px;
-
   padding: 8px;
-
   border: 1px solid var(--border);
   border-radius: 8px;
-
   font-family: 'Inter', sans-serif;
   font-size: 13px;
+  text-align: center;
 }
 
 .stock-input:focus {
@@ -626,6 +625,25 @@ button:disabled {
   margin-top: 0;
 }
 
+.inventory-medicine-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inventory-medicine-info p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.inventory-medicine-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
 /* Pharmacy Reservations */
 
 .reservation-table {

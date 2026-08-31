@@ -18,11 +18,14 @@ function ManageInventory() {
   const [showCreateForm, setShowCreateForm] = useState(false)
 
   const [newMedicine, setNewMedicine] = useState({
-    name: '',
+    genericName: '',
+    brandName: '',
     dosage: '',
+    dosageForm: '',
     category: '',
     price: '',
-    requiresPrescription: false
+    requiresPrescription: false,
+    medicineImg: null
   })
 
   const [newMedicineStock, setNewMedicineStock] = useState(1)
@@ -89,19 +92,34 @@ function ManageInventory() {
         return
       }
 
-      const createdMedicine = await createMedicine({
-        ...newMedicine,
-        price: Number(newMedicine.price)
-      })
+      const formData = new FormData()
+
+      formData.append('genericName', newMedicine.genericName)
+      formData.append('brandName', newMedicine.brandName)
+      formData.append('dosage', newMedicine.dosage)
+      formData.append('dosageForm', newMedicine.dosageForm)
+      formData.append('category', newMedicine.category)
+      formData.append('price', newMedicine.price)
+
+      formData.append('requiresPrescription', newMedicine.requiresPrescription)
+
+      if (newMedicine.medicineImg) {
+        formData.append('medicineImg', newMedicine.medicineImg)
+      }
+
+      const createdMedicine = await createMedicine(formData)
 
       await addMedicine(createdMedicine._id, newMedicineStock)
 
       setNewMedicine({
-        name: '',
+        genericName: '',
+        brandName: '',
         dosage: '',
+        dosageForm: '',
         category: '',
         price: '',
-        requiresPrescription: false
+        requiresPrescription: false,
+        medicineImg: null
       })
 
       setNewMedicineStock(1)
@@ -148,6 +166,7 @@ function ManageInventory() {
       loadInventory()
     } catch (error) {
       console.log(error)
+
       setError(error.response?.data?.message || 'Could not update stock.')
     }
   }
@@ -166,9 +185,18 @@ function ManageInventory() {
     return <p className="page-message">Loading...</p>
   }
 
-  const filteredMedicines = medicines.filter((medicine) =>
-    medicine.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const filteredMedicines = medicines.filter((medicine) => {
+    const searchText = search.toLowerCase()
+
+    const genericName = medicine.genericName || ''
+
+    const brandName = medicine.brandName || ''
+
+    return (
+      genericName.toLowerCase().includes(searchText) ||
+      brandName.toLowerCase().includes(searchText)
+    )
+  })
 
   return (
     <main className="page-container">
@@ -185,6 +213,7 @@ function ManageInventory() {
       <section className="inventory-section">
         <div className="section-header">
           <h2>Add Medicine</h2>
+
           <p>Search for an existing medicine and add it to your inventory.</p>
         </div>
 
@@ -196,7 +225,7 @@ function ManageInventory() {
               className="form-input"
               id="medicineSearch"
               type="text"
-              placeholder="Search medicine"
+              placeholder="Search by brand or generic name"
               value={search}
               onChange={(event) => {
                 setSearch(event.target.value)
@@ -213,8 +242,12 @@ function ManageInventory() {
                 filteredMedicines.map((medicine) => (
                   <div className="search-result-item" key={medicine._id}>
                     <div>
-                      <strong>{medicine.name}</strong>
-                      <p>{medicine.dosage}</p>
+                      <strong>{medicine.brandName}</strong>
+
+                      <p>
+                        {medicine.genericName} - {medicine.dosage}{' '}
+                        {medicine.dosageForm}
+                      </p>
                     </div>
 
                     <button
@@ -222,7 +255,8 @@ function ManageInventory() {
                       type="button"
                       onClick={() => {
                         setSelectedMedicine(medicine._id)
-                        setSearch(medicine.name)
+
+                        setSearch(medicine.brandName)
                       }}
                     >
                       Select
@@ -285,17 +319,35 @@ function ManageInventory() {
             <h3 className="card-title">Create New Medicine</h3>
 
             <div className="form-group">
-              <label htmlFor="medicineName">Medicine Name</label>
+              <label htmlFor="brandName">Brand Name</label>
 
               <input
                 className="form-input"
                 type="text"
-                id="medicineName"
-                value={newMedicine.name}
+                id="brandName"
+                value={newMedicine.brandName}
                 onChange={(event) =>
                   setNewMedicine({
                     ...newMedicine,
-                    name: event.target.value
+                    brandName: event.target.value
+                  })
+                }
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="genericName">Generic Name</label>
+
+              <input
+                className="form-input"
+                type="text"
+                id="genericName"
+                value={newMedicine.genericName}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    genericName: event.target.value
                   })
                 }
                 required
@@ -314,6 +366,25 @@ function ManageInventory() {
                   setNewMedicine({
                     ...newMedicine,
                     dosage: event.target.value
+                  })
+                }
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="dosageForm">Dosage Form</label>
+
+              <input
+                className="form-input"
+                type="text"
+                id="dosageForm"
+                placeholder="Tablet, Capsule, Syrup..."
+                value={newMedicine.dosageForm}
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    dosageForm: event.target.value
                   })
                 }
                 required
@@ -355,6 +426,23 @@ function ManageInventory() {
                   })
                 }
                 required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="medicineImg">Medicine Image</label>
+
+              <input
+                className="form-input"
+                type="file"
+                id="medicineImg"
+                accept="image/png, image/jpeg, image/jpg"
+                onChange={(event) =>
+                  setNewMedicine({
+                    ...newMedicine,
+                    medicineImg: event.target.files[0]
+                  })
+                }
               />
             </div>
 
@@ -402,6 +490,7 @@ function ManageInventory() {
       <section className="inventory-section">
         <div className="section-header">
           <h2>My Inventory</h2>
+
           <p>View stock levels and update medicines in your pharmacy.</p>
         </div>
 
@@ -421,9 +510,25 @@ function ManageInventory() {
 
             {inventory.map((item) => (
               <div className="inventory-table-row" key={item._id}>
-                <strong>{item.medicine.name}</strong>
+                <div className="inventory-medicine-info">
+                  {item.medicine.medicineImg && (
+                    <img
+                      className="inventory-medicine-image"
+                      src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${item.medicine.medicineImg}`}
+                      alt={item.medicine.brandName}
+                    />
+                  )}
 
-                <span>{item.medicine.dosage}</span>
+                  <div>
+                    <strong>{item.medicine.brandName}</strong>
+
+                    <p>{item.medicine.genericName}</p>
+                  </div>
+                </div>
+
+                <span>
+                  {item.medicine.dosage} {item.medicine.dosageForm}
+                </span>
 
                 <span>{item.medicine.category}</span>
 

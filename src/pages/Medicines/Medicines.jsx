@@ -24,9 +24,17 @@ function Medicines() {
     loadMedicines()
   }, [])
 
-  const filteredMedicines = medicines.filter((medicine) =>
-    medicine.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const filteredMedicines = medicines.filter((medicine) => {
+    const searchText = search.toLowerCase()
+
+    const genericName = medicine.genericName || ''
+    const brandName = medicine.brandName || ''
+
+    return (
+      genericName.toLowerCase().includes(searchText) ||
+      brandName.toLowerCase().includes(searchText)
+    )
+  })
 
   if (loading) {
     return <p className="page-message">Loading...</p>
@@ -42,7 +50,7 @@ function Medicines() {
       <input
         className="search-input"
         type="text"
-        placeholder="Search for a medicine"
+        placeholder="Search by generic or brand name"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
       />
@@ -55,10 +63,28 @@ function Medicines() {
         <div className="card-grid">
           {filteredMedicines.map((medicine) => (
             <div className="card" key={medicine._id}>
-              <h3 className="card-title">{medicine.name}</h3>
+              {medicine.medicineImg && (
+                <img
+                  className="medicine-image"
+                  src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${medicine.medicineImg}`}
+                  alt={medicine.brandName}
+                />
+              )}
+
+              <h3 className="card-title">{medicine.brandName}</h3>
+
+              <p>
+                <span className="card-label">Generic Name:</span>{' '}
+                {medicine.genericName}
+              </p>
 
               <p>
                 <span className="card-label">Dosage:</span> {medicine.dosage}
+              </p>
+
+              <p>
+                <span className="card-label">Dosage Form:</span>{' '}
+                {medicine.dosageForm}
               </p>
 
               <p>

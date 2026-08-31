@@ -75,10 +75,27 @@ function MedicineDetails() {
   return (
     <main className="page-container">
       <div className="card details-card">
-        <h1 className="page-title">{medicine.name}</h1>
+        {medicine.medicineImg && (
+          <img
+            className="medicine-image"
+            src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${medicine.medicineImg}`}
+            alt={medicine.brandName}
+          />
+        )}
+
+        <h1 className="page-title">{medicine.brandName}</h1>
+
+        <p>
+          <span className="card-label">Generic Name:</span>{' '}
+          {medicine.genericName}
+        </p>
 
         <p>
           <span className="card-label">Dosage:</span> {medicine.dosage}
+        </p>
+
+        <p>
+          <span className="card-label">Dosage Form:</span> {medicine.dosageForm}
         </p>
 
         <p>
@@ -163,8 +180,7 @@ function MedicineDetails() {
                     className="btn btn-primary"
                     onClick={() => handleReserve(item.pharmacy._id)}
                   >
-                    {' '}
-                    Reserve{' '}
+                    Reserve
                   </button>
                 </div>
               ) : !user ? (
@@ -172,8 +188,7 @@ function MedicineDetails() {
                   className="btn btn-primary"
                   onClick={() => navigate('/sign-in')}
                 >
-                  {' '}
-                  Sign in to Reserve{' '}
+                  Sign in to Reserve
                 </button>
               ) : null}
             </div>
