@@ -74,34 +74,56 @@ function MedicineDetails() {
 
   return (
     <main className="page-container">
-      <div className="card details-card">
-        <h1 className="page-title">{medicine.name}</h1>
+      <div className="medicine-profile-card">
+        {medicine.medicineImg && (
+          <div className="medicine-profile-image-container">
+            <img
+              className="medicine-profile-image"
+              src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${medicine.medicineImg}`}
+              alt={medicine.brandName}
+            />
+          </div>
+        )}
 
-        <p>
-          <span className="card-label">Dosage:</span> {medicine.dosage}
-        </p>
+        <div className="medicine-profile-info">
+          <h1 className="page-title">{medicine.brandName}</h1>
 
-        <p>
-          <span className="card-label">Category:</span> {medicine.category}
-        </p>
+          <p>
+            <span className="card-label">Generic Name:</span>{' '}
+            {medicine.genericName}
+          </p>
 
-        <p>
-          <span className="card-label">Price:</span> {medicine.price} BD
-        </p>
+          <p>
+            <span className="card-label">Dosage:</span> {medicine.dosage}
+          </p>
 
-        <p>
-          <span
-            className={
-              medicine.requiresPrescription
-                ? 'badge badge-gold'
-                : 'badge badge-light'
-            }
-          >
-            {medicine.requiresPrescription
-              ? 'Prescription Required'
-              : 'No Prescription Required'}
-          </span>
-        </p>
+          <p>
+            <span className="card-label">Dosage Form:</span>{' '}
+            {medicine.dosageForm}
+          </p>
+
+          <p>
+            <span className="card-label">Category:</span> {medicine.category}
+          </p>
+
+          <p>
+            <span className="card-label">Price:</span> {medicine.price} BD
+          </p>
+
+          <p>
+            <span
+              className={
+                medicine.requiresPrescription
+                  ? 'badge badge-gold'
+                  : 'badge badge-light'
+              }
+            >
+              {medicine.requiresPrescription
+                ? 'Prescription Required'
+                : 'No Prescription Required'}
+            </span>
+          </p>
+        </div>
       </div>
 
       {error && <p className="error">{error}</p>}
@@ -109,6 +131,7 @@ function MedicineDetails() {
 
       <div className="section-header">
         <h2>Available Pharmacies</h2>
+
         <p>Choose a pharmacy to reserve your medicine.</p>
       </div>
 
@@ -163,8 +186,7 @@ function MedicineDetails() {
                     className="btn btn-primary"
                     onClick={() => handleReserve(item.pharmacy._id)}
                   >
-                    {' '}
-                    Reserve{' '}
+                    Reserve
                   </button>
                 </div>
               ) : !user ? (
@@ -172,8 +194,7 @@ function MedicineDetails() {
                   className="btn btn-primary"
                   onClick={() => navigate('/sign-in')}
                 >
-                  {' '}
-                  Sign in to Reserve{' '}
+                  Sign in to Reserve
                 </button>
               ) : null}
             </div>
