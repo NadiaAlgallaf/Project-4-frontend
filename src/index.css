@@ -857,3 +857,45 @@ button:disabled {
 .pharmacy-profile-info p {
   margin: 6px 0;
 }
+
+/* Medicines image */
+.medicine-image {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+/* medicine details */
+.medicine-profile-card {
+  display: flex;
+  min-height: 300px;
+  background-color: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.medicine-profile-image-container {
+  width: 40%;
+  min-width: 280px;
+}
+
+.medicine-profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.medicine-profile-info {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.medicine-profile-info p {
+  margin: 6px 0;
+}
