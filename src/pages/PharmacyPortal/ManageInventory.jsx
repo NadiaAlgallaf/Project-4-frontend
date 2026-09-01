@@ -167,7 +167,7 @@ function ManageInventory() {
   }
 
   const filteredMedicines = medicines.filter((medicine) =>
-    medicine.name.toLowerCase().includes(search.toLowerCase())
+    medicine.name?.toLowerCase().includes(search.toLowerCase())
   )
 
   return (
