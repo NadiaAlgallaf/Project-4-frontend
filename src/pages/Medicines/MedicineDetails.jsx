@@ -74,51 +74,56 @@ function MedicineDetails() {
 
   return (
     <main className="page-container">
-      <div className="card details-card">
+      <div className="medicine-profile-card">
         {medicine.medicineImg && (
-          <img
-            className="medicine-image"
-            src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${medicine.medicineImg}`}
-            alt={medicine.brandName}
-          />
+          <div className="medicine-profile-image-container">
+            <img
+              className="medicine-profile-image"
+              src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${medicine.medicineImg}`}
+              alt={medicine.brandName}
+            />
+          </div>
         )}
 
-        <h1 className="page-title">{medicine.brandName}</h1>
+        <div className="medicine-profile-info">
+          <h1 className="page-title">{medicine.brandName}</h1>
 
-        <p>
-          <span className="card-label">Generic Name:</span>{' '}
-          {medicine.genericName}
-        </p>
+          <p>
+            <span className="card-label">Generic Name:</span>{' '}
+            {medicine.genericName}
+          </p>
 
-        <p>
-          <span className="card-label">Dosage:</span> {medicine.dosage}
-        </p>
+          <p>
+            <span className="card-label">Dosage:</span> {medicine.dosage}
+          </p>
 
-        <p>
-          <span className="card-label">Dosage Form:</span> {medicine.dosageForm}
-        </p>
+          <p>
+            <span className="card-label">Dosage Form:</span>{' '}
+            {medicine.dosageForm}
+          </p>
 
-        <p>
-          <span className="card-label">Category:</span> {medicine.category}
-        </p>
+          <p>
+            <span className="card-label">Category:</span> {medicine.category}
+          </p>
 
-        <p>
-          <span className="card-label">Price:</span> {medicine.price} BD
-        </p>
+          <p>
+            <span className="card-label">Price:</span> {medicine.price} BD
+          </p>
 
-        <p>
-          <span
-            className={
-              medicine.requiresPrescription
-                ? 'badge badge-gold'
-                : 'badge badge-light'
-            }
-          >
-            {medicine.requiresPrescription
-              ? 'Prescription Required'
-              : 'No Prescription Required'}
-          </span>
-        </p>
+          <p>
+            <span
+              className={
+                medicine.requiresPrescription
+                  ? 'badge badge-gold'
+                  : 'badge badge-light'
+              }
+            >
+              {medicine.requiresPrescription
+                ? 'Prescription Required'
+                : 'No Prescription Required'}
+            </span>
+          </p>
+        </div>
       </div>
 
       {error && <p className="error">{error}</p>}
@@ -126,6 +131,7 @@ function MedicineDetails() {
 
       <div className="section-header">
         <h2>Available Pharmacies</h2>
+
         <p>Choose a pharmacy to reserve your medicine.</p>
       </div>
 
