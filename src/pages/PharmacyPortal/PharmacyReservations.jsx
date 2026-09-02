@@ -31,7 +31,10 @@ function PharmacyReservations() {
 
   async function handleStatus(id, status) {
     try {
+      setError('')
+
       await updateReservationStatus(id, status)
+
       loadReservations()
     } catch (error) {
       console.log(error)
@@ -69,7 +72,7 @@ function PharmacyReservations() {
             <span>Quantity</span>
             <span>Status</span>
             <span>Prescription</span>
-            <span>Action</span>
+            <span>Manage</span>
           </div>
 
           {reservations.map((reservation) => {
@@ -77,7 +80,21 @@ function PharmacyReservations() {
 
             return (
               <div className="reservation-table-row" key={reservation._id}>
-                <strong>{reservation.medicine.name}</strong>
+                <div className="reservation-medicine-info">
+                  {reservation.medicine.medicineImg && (
+                    <img
+                      className="reservation-table-image"
+                      src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${reservation.medicine.medicineImg}`}
+                      alt={reservation.medicine.brandName}
+                    />
+                  )}
+
+                  <div>
+                    <strong>{reservation.medicine.brandName}</strong>
+
+                    <p>{reservation.medicine.genericName}</p>
+                  </div>
+                </div>
 
                 <span>
                   {reservation.user.firstName} {reservation.user.lastName}
@@ -108,7 +125,7 @@ function PharmacyReservations() {
                   )}
                 </span>
 
-                <span>
+                <div className="reservation-manage">
                   {nextStatuses.length > 0 ? (
                     <select
                       className="form-input reservation-action-select"
@@ -132,7 +149,7 @@ function PharmacyReservations() {
                   ) : (
                     <span className="reservation-empty">No action</span>
                   )}
-                </span>
+                </div>
               </div>
             )
           })}

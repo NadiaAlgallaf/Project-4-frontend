@@ -76,8 +76,7 @@ function ManageInventory() {
       console.log(error)
 
       setError(
-        error?.response?.data?.message ||
-          'Could not add medicine to inventory'
+        error?.response?.data?.message || 'Could not add medicine to inventory'
       )
     }
   }
@@ -102,10 +101,7 @@ function ManageInventory() {
       formData.append('category', newMedicine.category)
       formData.append('price', newMedicine.price)
 
-      formData.append(
-        'requiresPrescription',
-        newMedicine.requiresPrescription
-      )
+      formData.append('requiresPrescription', newMedicine.requiresPrescription)
 
       if (newMedicine.medicineImg) {
         formData.append('medicineImg', newMedicine.medicineImg)
@@ -135,9 +131,7 @@ function ManageInventory() {
     } catch (error) {
       console.log(error)
 
-      setError(
-        error?.response?.data?.message || 'Could not create medicine'
-      )
+      setError(error?.response?.data?.message || 'Could not create medicine')
     }
   }
 
@@ -173,9 +167,7 @@ function ManageInventory() {
     } catch (error) {
       console.log(error)
 
-      setError(
-        error.response?.data?.message || 'Could not update stock.'
-      )
+      setError(error.response?.data?.message || 'Could not update stock.')
     }
   }
 
@@ -221,9 +213,7 @@ function ManageInventory() {
         <div className="section-header">
           <h2>Add Medicine</h2>
 
-          <p>
-            Search for an existing medicine and add it to your inventory.
-          </p>
+          <p>Search for an existing medicine and add it to your inventory.</p>
         </div>
 
         <div className="form-card inventory-form-card">
@@ -249,10 +239,7 @@ function ManageInventory() {
                 <p className="search-empty">No medicines found.</p>
               ) : (
                 filteredMedicines.map((medicine) => (
-                  <div
-                    className="search-result-item"
-                    key={medicine._id}
-                  >
+                  <div className="search-result-item" key={medicine._id}>
                     <div>
                       <strong>{medicine.brandName}</strong>
 
@@ -294,9 +281,7 @@ function ManageInventory() {
                     id="stock"
                     min="1"
                     value={stock}
-                    onChange={(event) =>
-                      setStock(Number(event.target.value))
-                    }
+                    onChange={(event) => setStock(Number(event.target.value))}
                   />
                 </div>
 
@@ -319,9 +304,7 @@ function ManageInventory() {
               type="button"
               onClick={() => setShowCreateForm(!showCreateForm)}
             >
-              {showCreateForm
-                ? 'Cancel'
-                : 'Create New Medicine'}
+              {showCreateForm ? 'Cancel' : 'Create New Medicine'}
             </button>
           </div>
         </div>
@@ -495,10 +478,7 @@ function ManageInventory() {
               />
             </div>
 
-            <button
-              className="btn btn-primary"
-              type="submit"
-            >
+            <button className="btn btn-primary" type="submit">
               Create and Add to Inventory
             </button>
           </form>
@@ -509,15 +489,11 @@ function ManageInventory() {
         <div className="section-header">
           <h2>My Inventory</h2>
 
-          <p>
-            View stock levels and update medicines in your pharmacy.
-          </p>
+          <p>View stock levels and update medicines in your pharmacy.</p>
         </div>
 
         {inventory.length === 0 ? (
-          <p className="page-message">
-            No medicines in your inventory.
-          </p>
+          <p className="page-message">No medicines in your inventory.</p>
         ) : (
           <div className="inventory-table">
             <div className="inventory-table-header">
@@ -532,10 +508,7 @@ function ManageInventory() {
             </div>
 
             {inventory.map((item) => (
-              <div
-                className="inventory-table-row"
-                key={item._id}
-              >
+              <div className="inventory-table-row" key={item._id}>
                 <div className="inventory-medicine-info">
                   {item.medicine.medicineImg && (
                     <img
@@ -553,17 +526,14 @@ function ManageInventory() {
                 </div>
 
                 <span>
-                  {item.medicine.dosage}{' '}
-                  {item.medicine.dosageForm}
+                  {item.medicine.dosage} {item.medicine.dosageForm}
                 </span>
 
                 <span>{item.medicine.category}</span>
 
                 <span>{item.medicine.price} BD</span>
 
-                <span className="inventory-stock">
-                  {item.stock}
-                </span>
+                <span className="inventory-stock">{item.stock}</span>
 
                 {/* Stock Status */}
                 <span>
@@ -613,17 +583,16 @@ function ManageInventory() {
                   <button
                     className="btn btn-light"
                     type="button"
-                    onClick={() =>
-                      handleUpdateStock(item._id)
-                    }
-                  > Update</button>
+                    onClick={() => handleUpdateStock(item._id)}
+                  >
+                    {' '}
+                    Update
+                  </button>
 
                   <button
                     className="btn btn-danger inventory-remove"
                     type="button"
-                    onClick={() =>
-                      handleDelete(item._id)
-                    }
+                    onClick={() => handleDelete(item._id)}
                   >
                     Remove
                   </button>
