@@ -1,15 +1,16 @@
 {
- "nav": {
-  "home": "الرئيسية",
-  "medicines": "الأدوية",
-  "pharmacies": "الصيدليات",
-  "myReservations": "حجوزاتي",
-  "dashboard": "لوحة التحكم",
-  "inventory": "المخزون",
-  "reservations": "الحجوزات",
-  "signUp": "إنشاء حساب",
-  "signIn": "تسجيل الدخول",
-  "signOut": "تسجيل الخروج"
+  "nav": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "medicines": "الأدوية",
+    "pharmacies": "الصيدليات",
+    "myReservations": "حجوزاتي",
+    "dashboard": "لوحة التحكم",
+    "inventory": "المخزون",
+    "reservations": "الحجوزات",
+    "signUp": "إنشاء حساب",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج"
   },
   "home": {
     "home": "الرئيسية"

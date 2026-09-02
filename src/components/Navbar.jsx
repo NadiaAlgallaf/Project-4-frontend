@@ -16,35 +16,25 @@ function Navbar() {
         </Link>
 
         <div className="navbar-links">
-          <Link to="/">
-            {t('nav.home')}
-          </Link>
+          <Link to="/">{t('nav.home')}</Link>
 
-          <Link to="/medicines">
-            {t('nav.medicines')}
-          </Link>
+          <Link to="/about">{t('nav.about')}</Link>
 
-          <Link to="/pharmacies">
-            {t('nav.pharmacies')}
-          </Link>
+          <Link to="/medicines">{t('nav.medicines')}</Link>
+
+          <Link to="/pharmacies">{t('nav.pharmacies')}</Link>
 
           {user ? (
             <>
               {user.role === 'User' && (
-                <Link to="/my-reservations">
-                  {t('nav.myReservations')}
-                </Link>
+                <Link to="/my-reservations">{t('nav.myReservations')}</Link>
               )}
 
               {user.role === 'Pharmacy' && (
                 <>
-                  <Link to="/pharmacy/dashboard">
-                    {t('nav.dashboard')}
-                  </Link>
+                  <Link to="/pharmacy/dashboard">{t('nav.dashboard')}</Link>
 
-                  <Link to="/pharmacy/inventory">
-                    {t('nav.inventory')}
-                  </Link>
+                  <Link to="/pharmacy/inventory">{t('nav.inventory')}</Link>
 
                   <Link to="/pharmacy/reservations">
                     {t('nav.reservations')}
@@ -58,25 +48,16 @@ function Navbar() {
 
       <div className="navbar-actions">
         {user ? (
-          <button
-            className="btn btn-primary"
-            onClick={logout}
-          >
+          <button className="btn btn-primary" onClick={logout}>
             {t('nav.signOut')}
           </button>
         ) : (
           <>
-            <Link
-              to="/sign-up"
-              className="btn btn-light"
-            >
+            <Link to="/sign-up" className="btn btn-light">
               {t('nav.signUp')}
             </Link>
 
-            <Link
-              to="/sign-in"
-              className="btn btn-primary"
-            >
+            <Link to="/sign-in" className="btn btn-primary">
               {t('nav.signIn')}
             </Link>
           </>
