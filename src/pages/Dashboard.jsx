@@ -1,12 +1,14 @@
-import { useAuth } from "../context/AuthContext"
-import { useTranslation } from "react-i18next";
+import { useAuth } from '../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
-function Dashboard({  }) {
+function Dashboard({}) {
   const { t } = useTranslation()
-  const {user} = useAuth()
+  const { user } = useAuth()
   return (
     <div>
-        <h1>{t('dashboard.welcomeMessage')} {user.username}</h1>
+      <h1>
+        {t('dashboard.welcomeMessage')} {user.username}
+      </h1>
     </div>
   )
 }
