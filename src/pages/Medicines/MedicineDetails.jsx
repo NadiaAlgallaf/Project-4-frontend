@@ -52,7 +52,9 @@ function MedicineDetails() {
     } catch (error) {
       console.log(error)
 
-      setError(error?.response?.data?.message || 'Could not create reservation')
+      setError(
+        error?.response?.data?.message || 'Could not create reservation'
+      )
     }
   }
 
@@ -61,7 +63,9 @@ function MedicineDetails() {
   }, [id])
 
   const filteredAvailability = availability.filter((item) =>
-    item.pharmacy.location.toLowerCase().includes(locationFilter.toLowerCase())
+    item.pharmacy.location
+      .toLowerCase()
+      .includes(locationFilter.toLowerCase())
   )
 
   if (loading) {
@@ -94,7 +98,8 @@ function MedicineDetails() {
           </p>
 
           <p>
-            <span className="card-label">Dosage:</span> {medicine.dosage}
+            <span className="card-label">Dosage:</span>{' '}
+            {medicine.dosage}
           </p>
 
           <p>
@@ -103,11 +108,13 @@ function MedicineDetails() {
           </p>
 
           <p>
-            <span className="card-label">Category:</span> {medicine.category}
+            <span className="card-label">Category:</span>{' '}
+            {medicine.category}
           </p>
 
           <p>
-            <span className="card-label">Price:</span> {medicine.price} BD
+            <span className="card-label">Price:</span>{' '}
+            {medicine.price} BD
           </p>
 
           <p>
@@ -144,14 +151,20 @@ function MedicineDetails() {
       />
 
       {availability.length === 0 ? (
-        <p className="page-message">This medicine is currently unavailable.</p>
+        <p className="page-message">
+          This medicine is currently unavailable.
+        </p>
       ) : filteredAvailability.length === 0 ? (
-        <p className="page-message">No pharmacies found in this location.</p>
+        <p className="page-message">
+          No pharmacies found in this location.
+        </p>
       ) : (
         <div className="card-grid">
           {filteredAvailability.map((item) => (
             <div className="card" key={item._id}>
-              <h3 className="card-title">{item.pharmacy.name}</h3>
+              <h3 className="card-title">
+                {item.pharmacy.name}
+              </h3>
 
               <p>
                 <span className="card-label">Location:</span>{' '}
@@ -159,16 +172,35 @@ function MedicineDetails() {
               </p>
 
               <p>
-                <span className="card-label">Phone:</span> {item.pharmacy.phone}
+                <span className="card-label">Phone:</span>{' '}
+                {item.pharmacy.phone}
               </p>
 
               <p>
-                <span className="card-label">Stock:</span> {item.stock}
+                <span className="card-label">Stock:</span>{' '}
+                {item.stock}
+              </p>
+
+              {/* Stock Status */}
+              <p>
+                <span
+                  className={
+                    item.stockStatus === 'Low Stock'
+                      ? 'badge badge-warning'
+                      : 'badge badge-success'
+                  }
+                >
+                  {item.stockStatus === 'Low Stock'
+                    ? '⚠️ Low Stock'
+                    : '✓ In Stock'}
+                </span>
               </p>
 
               {user?.role === 'User' ? (
                 <div className="reservation-actions">
-                  <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
+                  <label htmlFor={`quantity-${item._id}`}>
+                    Quantity:
+                  </label>
 
                   <input
                     className="quantity-input"
@@ -184,7 +216,9 @@ function MedicineDetails() {
 
                   <button
                     className="btn btn-primary"
-                    onClick={() => handleReserve(item.pharmacy._id)}
+                    onClick={() =>
+                      handleReserve(item.pharmacy._id)
+                    }
                   >
                     Reserve
                   </button>

@@ -11,31 +11,44 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        {/* Links available for everyone */}
         <Link to="/" className="navbar-logo">
           <img src={dawaLogo} alt="Dawa" />
         </Link>
 
         <div className="navbar-links">
-          <Link to="/">{t('nav.home')}</Link>
-          <Link to="/medicines">Medicines</Link>
-          <Link to="/pharmacies">Pharmacies</Link>
+          <Link to="/">
+            {t('nav.home')}
+          </Link>
+
+          <Link to="/medicines">
+            {t('nav.medicines')}
+          </Link>
+
+          <Link to="/pharmacies">
+            {t('nav.pharmacies')}
+          </Link>
 
           {user ? (
             <>
-              {/* Links for User */}
               {user.role === 'User' && (
-                <Link to="/my-reservations">My Reservations</Link>
+                <Link to="/my-reservations">
+                  {t('nav.myReservations')}
+                </Link>
               )}
 
-              {/* Links for Pharmacy */}
               {user.role === 'Pharmacy' && (
                 <>
-                  <Link to="/pharmacy/dashboard">Dashboard</Link>
+                  <Link to="/pharmacy/dashboard">
+                    {t('nav.dashboard')}
+                  </Link>
 
-                  <Link to="/pharmacy/inventory">Inventory</Link>
+                  <Link to="/pharmacy/inventory">
+                    {t('nav.inventory')}
+                  </Link>
 
-                  <Link to="/pharmacy/reservations">Reservations</Link>
+                  <Link to="/pharmacy/reservations">
+                    {t('nav.reservations')}
+                  </Link>
                 </>
               )}
             </>
@@ -45,20 +58,25 @@ function Navbar() {
 
       <div className="navbar-actions">
         {user ? (
-          <>
-            {/* Available for any signed in*/}
-            <button className="btn btn-primary" onClick={logout}>
-              {t('nav.signOut')}
-            </button>
-          </>
+          <button
+            className="btn btn-primary"
+            onClick={logout}
+          >
+            {t('nav.signOut')}
+          </button>
         ) : (
           <>
-            {/* Links for users who are not signed in */}
-            <Link to="/sign-up" className="btn btn-light">
+            <Link
+              to="/sign-up"
+              className="btn btn-light"
+            >
               {t('nav.signUp')}
             </Link>
 
-            <Link to="/sign-in" className="btn btn-primary">
+            <Link
+              to="/sign-in"
+              className="btn btn-primary"
+            >
               {t('nav.signIn')}
             </Link>
           </>
