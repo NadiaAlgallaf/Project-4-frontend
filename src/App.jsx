@@ -11,7 +11,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 import ManageInventory from './pages/PharmacyPortal/ManageInventory'
 import PharmacyReservations from './pages/PharmacyPortal/PharmacyReservations'
-import PharmacyDashboard from './pages/PharmacyPortal/PharmacyDashboard'
 
 import MyReservations from './pages/Reservations/MyReservations'
 import ReservationDetails from './pages/Reservations/ReservationDetails'
@@ -68,15 +67,6 @@ function App() {
         />
 
         {/* Pharmacy users only */}
-        <Route
-          path="/pharmacy/dashboard"
-          element={
-            <ProtectedRoute role="Pharmacy">
-              {' '}
-              <PharmacyDashboard />{' '}
-            </ProtectedRoute>
-          }
-        />
         <Route
           path="/pharmacy/inventory"
           element={
