@@ -1575,3 +1575,32 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+
+/* File upload */
+
+input[type='file'].form-input {
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text);
+  background-color: white;
+}
+
+input[type='file'].form-input::file-selector-button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-right: 14px;
+
+  background-color: var(--primary);
+  color: white;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+input[type='file'].form-input::file-selector-button:hover {
+  opacity: 0.9;
+}
