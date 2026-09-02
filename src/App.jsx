@@ -5,12 +5,12 @@ import SignupPage from './pages/Auth/SignupPage'
 import SignInPage from './pages/Auth/SigninPage'
 import Homepage from './pages/Home/Homepage'
 import Dashboard from './pages/Dashboard'
+import About from './pages/Home/About'
 
 import ProtectedRoute from './components/ProtectedRoute'
 
 import ManageInventory from './pages/PharmacyPortal/ManageInventory'
 import PharmacyReservations from './pages/PharmacyPortal/PharmacyReservations'
-import PharmacyDashboard from './pages/PharmacyPortal/PharmacyDashboard'
 
 import MyReservations from './pages/Reservations/MyReservations'
 import ReservationDetails from './pages/Reservations/ReservationDetails'
@@ -29,33 +29,62 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<Homepage />} />
+        <Route path="/about" element={<About />} />
         <Route path="/sign-up" element={<SignupPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
-
         <Route path="/medicines" element={<Medicines />} />
         <Route path="/medicines/:id" element={<MedicineDetails />} />
-
         <Route path="/pharmacies" element={<Pharmacies />} />
         <Route path="/pharmacies/:id" element={<PharmacyDetails />} />
 
-        /* Logged-in users */
-        <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute>}
-        />
-
+        {/* Logged-in users */}
         <Route
-          path="/my-reservations"element={ <ProtectedRoute> <MyReservations /> </ProtectedRoute> } />
-
-        <Route path="/reservations/:id" element={ <ProtectedRoute> <ReservationDetails /> </ProtectedRoute>}
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              {' '}
+              <Dashboard />{' '}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-reservations"
+          element={
+            <ProtectedRoute>
+              {' '}
+              <MyReservations />{' '}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reservations/:id"
+          element={
+            <ProtectedRoute>
+              {' '}
+              <ReservationDetails />{' '}
+            </ProtectedRoute>
+          }
         />
 
-        /* Pharmacy users only */ 
-        <Route path="/pharmacy/dashboard" element={ <ProtectedRoute role="Pharmacy"> <PharmacyDashboard /> </ProtectedRoute> }
+        {/* Pharmacy users only */}
+        <Route
+          path="/pharmacy/inventory"
+          element={
+            <ProtectedRoute role="Pharmacy">
+              {' '}
+              <ManageInventory />{' '}
+            </ProtectedRoute>
+          }
         />
-
-        <Route path="/pharmacy/inventory" element={<ProtectedRoute role="Pharmacy"> <ManageInventory /> </ProtectedRoute>}
+        <Route
+          path="/pharmacy/reservations"
+          element={
+            <ProtectedRoute role="Pharmacy">
+              {' '}
+              <PharmacyReservations />{' '}
+            </ProtectedRoute>
+          }
         />
-
-        <Route path="/pharmacy/reservations" element={ <ProtectedRoute role="Pharmacy"> <PharmacyReservations /> </ProtectedRoute> } />
       </Routes>
     </div>
   )
