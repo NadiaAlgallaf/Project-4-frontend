@@ -35,11 +35,8 @@ const SignInForm = () => {
 
       setUser(signedInUser)
 
-      if (signedInUser.role === 'Pharmacy') {
-        navigate('/pharmacy/dashboard')
-      } else {
-        navigate('/')
-      }
+      // Both User and Pharmacy go to the dashboard
+      navigate('/dashboard')
     } catch (err) {
       console.log(err)
 

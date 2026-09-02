@@ -27,12 +27,16 @@ function Navbar() {
           {user ? (
             <>
               {user.role === 'User' && (
-                <Link to="/my-reservations">{t('nav.myReservations')}</Link>
+                <>
+                  <Link to="/dashboard">{t('nav.dashboard')}</Link>
+
+                  <Link to="/my-reservations">{t('nav.myReservations')}</Link>
+                </>
               )}
 
               {user.role === 'Pharmacy' && (
                 <>
-                  <Link to="/pharmacy/dashboard">{t('nav.dashboard')}</Link>
+                  <Link to="/dashboard">{t('nav.dashboard')}</Link>
 
                   <Link to="/pharmacy/inventory">{t('nav.inventory')}</Link>
 
