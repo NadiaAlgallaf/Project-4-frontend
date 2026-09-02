@@ -11,14 +11,13 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
+        {/* Links available for everyone */}
         <Link to="/" className="navbar-logo">
           <img src={dawaLogo} alt="Dawa" />
         </Link>
 
         <div className="navbar-links">
-          <Link to="/">
-            {t('nav.home')}
-          </Link>
+          <Link to="/">{t('nav.home')}</Link>
 
           <Link to="/medicines">
             {t('nav.medicines')}
@@ -30,12 +29,14 @@ function Navbar() {
 
           {user ? (
             <>
+              {/* Links for User */}
               {user.role === 'User' && (
                 <Link to="/my-reservations">
                   {t('nav.myReservations')}
                 </Link>
               )}
 
+              {/* Links for Pharmacy */}
               {user.role === 'Pharmacy' && (
                 <>
                   <Link to="/pharmacy/dashboard">
