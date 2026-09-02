@@ -1258,183 +1258,390 @@ button:disabled {
 /* =========================
    HOMEPAGE
 ========================= */
-
 .home-page {
-  background-color: var(--white);
+  background-color: var(--background);
 }
 
-/* Hero */
-
 .home-hero {
-  min-height: 620px;
+  max-width: 1400px;
+  min-height: 720px;
+
+  margin: 0 auto;
+  padding: 80px 60px;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-
-  gap: 70px;
-
-  padding: 80px max(5%, calc((100% - 1200px) / 2));
-
-  background-color: var(--primary-extra-light);
+  gap: 80px;
 }
 
+/* Left side */
+
 .home-hero-content {
-  max-width: 600px;
+  max-width: 650px;
 }
 
 .home-label {
-  margin: 0 0 18px;
+  margin-bottom: 22px;
 
   color: var(--primary);
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 1.8px;
+
+  letter-spacing: 2px;
 }
 
-.home-hero h1 {
+.home-hero-content h1 {
   margin: 0;
 
   color: var(--text);
 
-  font-size: 54px;
-  line-height: 1.12;
+  font-size: 58px;
+  line-height: 1.15;
 }
 
-.home-hero h1 span {
+.home-hero-content h1 span {
   color: var(--primary);
 }
 
 .home-hero-text {
-  max-width: 570px;
+  max-width: 600px;
 
-  margin: 25px 0 0;
+  margin-top: 28px;
 
   color: var(--text-light);
 
   font-size: 18px;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 /* Hero buttons */
 
 .home-hero-actions {
   display: flex;
-  align-items: center;
   gap: 14px;
 
-  margin-top: 35px;
+  margin-top: 34px;
 }
 
 .home-main-btn,
 .home-secondary-btn {
   display: flex;
   align-items: center;
-  gap: 9px;
-
-  padding: 13px 20px;
+  gap: 10px;
 }
 
 .home-secondary-btn {
-  background-color: var(--white);
-  color: var(--primary-dark);
+  background-color: white;
 
   border: 1px solid var(--border);
+
+  color: var(--primary-dark);
 }
 
 .home-secondary-btn:hover {
-  border-color: var(--primary);
+  background-color: var(--primary-extra-light);
 }
 
-/* Right Hero Visual */
+/* Small benefits */
+
+.home-hero-points {
+  margin-top: 28px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+/* Right visual */
 
 .home-hero-visual {
-  min-height: 400px;
+  min-height: 470px;
+
+  padding: 38px;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 18px;
 
-  padding: 50px;
+  background: linear-gradient(
+    145deg,
+    var(--primary-light),
+    var(--primary-extra-light)
+  );
 
-  background-color: var(--primary-light);
+  border-radius: 32px;
 
-  border-radius: 30px;
+  box-shadow: 0 20px 45px rgba(0, 101, 108, 0.08);
 }
 
-/* Fake search bar */
+/* Visual header */
+
+.home-visual-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.home-visual-label {
+  color: var(--primary);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.home-visual-header h3 {
+  margin: 6px 0 0;
+
+  color: var(--text);
+
+  font-size: 24px;
+}
+
+.home-visual-location {
+  color: var(--primary);
+
+  font-size: 24px;
+}
+
+/* Search preview */
 
 .home-search-preview {
-  display: flex;
-  align-items: center;
-  gap: 17px;
-
-  padding: 22px;
-
-  background-color: var(--white);
-
-  border-radius: 14px;
-
-  box-shadow: 0 10px 30px rgba(38, 51, 51, 0.08);
-}
-
-.home-search-preview > svg {
-  color: var(--primary);
-  font-size: 22px;
-}
-
-.home-search-preview span {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.home-search-preview p {
-  margin: 5px 0 0;
-
-  color: var(--text-light);
-  font-size: 13px;
-}
-
-/* Availability card */
-
-.home-availability-card {
-  width: 85%;
+  padding: 18px 20px;
 
   display: flex;
   align-items: center;
   gap: 14px;
 
-  margin: 25px 0 0 auto;
-  padding: 20px;
+  background-color: white;
 
-  background-color: var(--white);
+  border-radius: 15px;
 
-  border-radius: 14px;
-
-  box-shadow: 0 10px 30px rgba(38, 51, 51, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.home-available-dot {
-  width: 12px;
-  height: 12px;
+.home-search-preview svg {
+  color: var(--primary);
 
-  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.home-search-preview span {
+  font-weight: 600;
+}
+
+.home-search-preview p {
+  margin: 4px 0 0;
+
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+/* Categories */
+
+.home-category-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.home-mini-category {
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  background-color: rgba(255, 255, 255, 0.8);
+
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.home-mini-category span {
+  font-size: 18px;
+}
+
+/* Availability card */
+
+.home-availability-preview {
+  padding: 8px 20px;
+
+  background-color: white;
+
+  border-radius: 18px;
+
+  box-shadow: 0 12px 30px rgba(0, 101, 108, 0.06);
+}
+
+.home-availability-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.home-availability-title strong {
+  color: var(--text);
+
+  font-size: 15px;
+}
+
+.home-availability-title p {
+  margin: 4px 0 0;
+
+  color: var(--text-light);
+
+  font-size: 13px;
+}
+
+.home-availability-title svg {
+  color: var(--primary);
+
+  font-size: 20px;
+}
+
+/* Availability rows */
+
+.home-availability-line {
+  padding: 15px 0;
+
+  display: grid;
+  grid-template-columns: 15px 1fr auto;
+  align-items: center;
+  gap: 12px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.home-availability-line:last-child {
+  border-bottom: none;
+}
+
+.home-pharmacy-dot {
+  width: 10px;
+  height: 10px;
 
   background-color: var(--primary);
 
   border-radius: 50%;
 }
 
-.home-availability-card strong {
-  color: var(--primary-dark);
+.home-pharmacy-dot.low {
+  background-color: var(--gold);
 }
 
-.home-availability-card p {
-  margin: 5px 0 0;
+.home-availability-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-availability-info strong {
+  color: var(--text);
+
+  font-size: 14px;
+}
+
+.home-availability-info span {
+  margin-top: 3px;
+
+  color: var(--primary);
+
+  font-size: 12px;
+}
+
+/* Footer */
+
+.home-visual-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   color: var(--text-light);
+
   font-size: 13px;
+}
+
+.home-visual-footer a {
+  color: var(--primary-dark);
+
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-visual-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 950px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+
+    padding: 60px 30px;
+  }
+
+  .home-hero-content {
+    max-width: none;
+  }
+
+  .home-hero-content h1 {
+    font-size: 46px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-hero {
+    padding: 45px 20px;
+  }
+
+  .home-hero-content h1 {
+    font-size: 38px;
+  }
+
+  .home-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-hero-points {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .home-hero-visual {
+    padding: 24px;
+  }
+
+  .home-category-row {
+    grid-template-columns: 1fr;
+  }
+
+  .home-visual-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
 
 /* Dashboard page */
@@ -1603,4 +1810,184 @@ input[type='file'].form-input::file-selector-button {
 
 input[type='file'].form-input::file-selector-button:hover {
   opacity: 0.9;
+}
+
+/* My Reservations */
+
+.reservation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reservation-card {
+  display: flex;
+  align-items: center;
+
+  background-color: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  min-height: 140px;
+  overflow: hidden;
+}
+
+/* Small medicine image */
+
+.reservation-image-container {
+  width: 110px;
+  min-width: 110px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px;
+}
+
+.reservation-medicine-image {
+  width: 80px;
+  height: 80px;
+
+  object-fit: contain;
+}
+
+.reservation-image-placeholder {
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--primary-extra-light);
+  border-radius: 8px;
+
+  color: var(--text-light);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Reservation information */
+
+.reservation-card-content {
+  flex: 1;
+  padding: 18px 22px;
+}
+
+.reservation-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 20px;
+}
+
+.reservation-card-header .card-title {
+  margin: 0 0 4px;
+
+  font-size: 18px;
+}
+
+.reservation-generic-name {
+  margin: 0;
+
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+/* Pharmacy, dosage and quantity */
+
+.reservation-info {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px 25px;
+
+  margin-top: 12px;
+}
+
+.reservation-info p {
+  margin: 0;
+
+  font-size: 14px;
+  color: var(--text);
+}
+
+.reservation-info .card-label {
+  font-weight: 600;
+}
+
+/* View Details */
+
+.reservation-card-actions {
+  margin-top: 14px;
+}
+
+.reservation-card-actions .btn {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .reservation-card {
+    align-items: flex-start;
+  }
+
+  .reservation-image-container {
+    width: 90px;
+    min-width: 90px;
+    padding: 12px;
+  }
+
+  .reservation-medicine-image {
+    width: 65px;
+    height: 65px;
+  }
+
+  .reservation-card-content {
+    padding: 15px;
+  }
+
+  .reservation-info {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+/* Reservation Details */
+
+.details-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.details-heading .page-title {
+  margin: 0 0 15px;
+}
+
+.prescription-section {
+  margin-top: 25px;
+  padding: 25px;
+}
+
+.prescription-section .card-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.prescription-section p {
+  color: var(--text-light);
+}
+
+.prescription-section .form-input {
+  margin: 15px 0;
+}
+
+.reservation-details-actions {
+  margin-top: 20px;
 }
