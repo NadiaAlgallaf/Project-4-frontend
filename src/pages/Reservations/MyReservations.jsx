@@ -31,6 +31,7 @@ function MyReservations() {
     <main className="page-container">
       <div className="page-header">
         <h1 className="page-title">My Reservations</h1>
+
         <p className="page-subtitle">
           View and manage your medicine reservations.
         </p>
@@ -41,32 +42,65 @@ function MyReservations() {
       {reservations.length === 0 ? (
         <p className="page-message">You have no reservations yet.</p>
       ) : (
-        <div className="card-list">
+        <div className="reservation-list">
           {reservations.map((reservation) => (
-            <div className="card" key={reservation._id}>
-              <h3 className="card-title">{reservation.medicine.name}</h3>
+            <div className="reservation-card" key={reservation._id}>
+              <div className="reservation-image-container">
+                {reservation.medicine.medicineImg ? (
+                  <img
+                    className="reservation-medicine-image"
+                    src={`${import.meta.env.VITE_BACK_END_SERVER_URL}${reservation.medicine.medicineImg}`}
+                    alt={reservation.medicine.brandName}
+                  />
+                ) : (
+                  <div className="reservation-image-placeholder">No Image</div>
+                )}
+              </div>
 
-              <p>
-                <span className="card-label">Pharmacy:</span>{' '}
-                {reservation.pharmacy.name}
-              </p>
+              <div className="reservation-card-content">
+                <div className="reservation-card-header">
+                  <div>
+                    <h3 className="card-title">
+                      {reservation.medicine.brandName}
+                    </h3>
 
-              <p>
-                <span className="card-label">Quantity:</span>{' '}
-                {reservation.quantity}
-              </p>
+                    <p className="reservation-generic-name">
+                      {reservation.medicine.genericName}
+                    </p>
+                  </div>
 
-              <p>
-                <span className="card-label">Status:</span>{' '}
-                <span className="badge badge-light">{reservation.status}</span>
-              </p>
+                  <span className="badge badge-light">
+                    {reservation.status}
+                  </span>
+                </div>
 
-              <Link
-                className="btn btn-primary"
-                to={`/reservations/${reservation._id}`}
-              >
-                View Details
-              </Link>
+                <div className="reservation-info">
+                  <p>
+                    <span className="card-label">Pharmacy:</span>{' '}
+                    {reservation.pharmacy.name}
+                  </p>
+
+                  <p>
+                    <span className="card-label">Dosage:</span>{' '}
+                    {reservation.medicine.dosage}{' '}
+                    {reservation.medicine.dosageForm}
+                  </p>
+
+                  <p>
+                    <span className="card-label">Quantity:</span>{' '}
+                    {reservation.quantity}
+                  </p>
+                </div>
+
+                <div className="reservation-card-actions">
+                  <Link
+                    className="btn btn-primary"
+                    to={`/reservations/${reservation._id}`}
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
             </div>
           ))}
         </div>
