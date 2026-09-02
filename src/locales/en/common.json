@@ -1,15 +1,16 @@
 {
   "nav": {
-  "home": "Home",
-  "medicines": "Medicines",
-  "pharmacies": "Pharmacies",
-  "myReservations": "My Reservations",
-  "dashboard": "Dashboard",
-  "inventory": "Inventory",
-  "reservations": "Reservations",
-  "signUp": "Sign Up",
-  "signIn": "Sign In",
-  "signOut": "Sign Out"
+    "home": "Home",
+    "about": "About",
+    "medicines": "Medicines",
+    "pharmacies": "Pharmacies",
+    "myReservations": "My Reservations",
+    "dashboard": "Dashboard",
+    "inventory": "Inventory",
+    "reservations": "Reservations",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
   },
   "home": {
     "home": "Home"
@@ -34,8 +35,8 @@
       "submitting": "Signing up...",
       "cancel": "Cancel"
     },
-  "language": {
-    "switchTo": "Switch language"
+    "language": {
+      "switchTo": "Switch language"
+    }
   }
-}
 }
