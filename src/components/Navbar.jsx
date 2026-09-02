@@ -20,33 +20,23 @@ function Navbar() {
 
           <Link to="/about">{t('nav.about')}</Link>
 
+          {user && <Link to="/dashboard">{t('nav.dashboard')}</Link>}
+
+          {user?.role === 'Pharmacy' && (
+            <>
+              <Link to="/pharmacy/inventory">{t('nav.inventory')}</Link>
+
+              <Link to="/pharmacy/reservations">{t('nav.reservations')}</Link>
+            </>
+          )}
+
           <Link to="/medicines">{t('nav.medicines')}</Link>
 
           <Link to="/pharmacies">{t('nav.pharmacies')}</Link>
 
-          {user ? (
-            <>
-              {user.role === 'User' && (
-                <>
-                  <Link to="/dashboard">{t('nav.dashboard')}</Link>
-
-                  <Link to="/my-reservations">{t('nav.myReservations')}</Link>
-                </>
-              )}
-
-              {user.role === 'Pharmacy' && (
-                <>
-                  <Link to="/dashboard">{t('nav.dashboard')}</Link>
-
-                  <Link to="/pharmacy/inventory">{t('nav.inventory')}</Link>
-
-                  <Link to="/pharmacy/reservations">
-                    {t('nav.reservations')}
-                  </Link>
-                </>
-              )}
-            </>
-          ) : null}
+          {user?.role === 'User' && (
+            <Link to="/my-reservations">{t('nav.myReservations')}</Link>
+          )}
         </div>
       </div>
 
