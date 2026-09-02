@@ -67,7 +67,7 @@ function ReservationDetails() {
     } catch (error) {
       console.log(error)
 
-      setError('Could not upload prescription')
+      setError(error.response?.data?.message || 'Could not upload prescription')
     }
   }
 

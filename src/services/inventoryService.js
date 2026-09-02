@@ -39,4 +39,10 @@ async function deleteMedicine(id) {
   return response.data
 }
 
-export { getMyInventory, addMedicine, getMedicineAvailability, getPharmacyInventory ,deleteMedicine }
+export {
+  getMyInventory,
+  addMedicine,
+  getMedicineAvailability,
+  getPharmacyInventory,
+  deleteMedicine
+}
